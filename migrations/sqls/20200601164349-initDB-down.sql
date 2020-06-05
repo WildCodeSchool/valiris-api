@@ -1,1 +1,11 @@
-DROP TABLE IF EXISTS `customers`;
+DROP TABLE IF EXISTS `apartment`;
+
+DROP TABLE IF EXISTS `apartment_message`;
+
+DROP TABLE IF EXISTS `booking`;
+
+DROP TABLE IF EXISTS `contact`;
+
+DROP TABLE IF EXISTS `message`;
+
+DROP TABLE IF EXISTS `secondary_picture`;

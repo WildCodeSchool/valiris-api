@@ -35,7 +35,7 @@ Alternatively, you can just bring up the db and run the app outside a container 
 ```sh
 docker-compose up db #(wait until the console stop outputing stuff)
 npm run migrate
-npm run start:watch
+npm run start-watch
 ```
 That may be useful when developpping since you won't have to rebuild and re-run the NodeJS container every time when a change is made in the code.
 
