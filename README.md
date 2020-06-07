@@ -50,8 +50,8 @@ npm run test
 
 Install MySQL (5.7) on your OS. 
 Then, create two MySQL server instances, both accessible with the user `root` and the password `root` : 
-- One listening on port 3307 with an empty database called `customer_api_database`. 
-- One listening on port 3308 with an empty database called `customer_api_database_test`.
+- One listening on port 3307 with an empty database called `valiris_api_database`. 
+- One listening on port 3308 with an empty database called `valiris_api_database_test`.
 
 ### Run the app
 

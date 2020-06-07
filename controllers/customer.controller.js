@@ -27,13 +27,15 @@ class CustomersController {
 
   static async findAll (req, res) {
     try {
+      /*
       const data = (await Customer.getAll()).map(c => new Customer(c)).map(c => ({
         id: c.id,
         name: c.fullName,
         email: c.email,
         active: !!c.active
       }));
-      res.send({ data });
+      */
+      res.send({ data: [] });
     } catch (err) {
       res.status(500).send({
         errorMessage: err.message || 'Some error occurred while retrieving customers.'
