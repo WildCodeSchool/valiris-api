@@ -10,8 +10,8 @@ class Contact {
     this.email = contact.email;
   }
 
-  static validate (attributes){
-    const schema = Joi.object({ 
+  static validate (attributes) {
+    const schema = Joi.object({
       lastname: Joi.string().min(1).max(40).required(),
       firstname: Joi.string().min(1).max(40).required(),
       email: Joi.string().email().required(),
@@ -20,6 +20,7 @@ class Contact {
     });
     return schema.validate(attributes);
   }
+
   static async create (newContact) {
     return db.query('INSERT INTO contact SET ?', newContact)
       .then(res => {
@@ -30,5 +31,3 @@ class Contact {
 }
 
 module.exports = Contact;
-
-
