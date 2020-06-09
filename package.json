@@ -26,7 +26,8 @@
     ],
     "coveragePathIgnorePatterns": [
       "/node_modules/"
-    ]
+    ],
+    "testRunner": "jest-circus/runner"
   },
   "semistandard": {
     "env": [
@@ -51,6 +52,7 @@
   "devDependencies": {
     "husky": "^4.2.5",
     "jest": "^26.0.1",
+    "jest-circus": "^26.0.1",
     "nodemon": "^2.0.4",
     "semistandard": "^14.2.0",
     "supertest": "^4.0.2",

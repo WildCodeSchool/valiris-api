@@ -14,8 +14,7 @@ if (process.env.NODE_ENV !== 'production') {
   app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 }
 
-app.use('/contact', require('./routes/contact.routes.js'));
-app.use('/', (req, res) => { res.redirect('/contact'); });
+app.use('/contacts', require('./routes/contact.routes.js'));
 
 // set port, listen for requests
 const server = app.listen(PORT, () => {

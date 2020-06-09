@@ -15,7 +15,7 @@ class Contact {
       lastname: Joi.string().min(1).max(40).required(),
       firstname: Joi.string().min(1).max(40).required(),
       email: Joi.string().email().required(),
-      phone: Joi.number().min(5).max(15)
+      phone: Joi.string().min(5).max(15)
       // pattern(new Regexp(/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/))
     });
     return schema.validate(attributes);
