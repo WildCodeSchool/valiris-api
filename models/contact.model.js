@@ -10,10 +10,10 @@ class Contact {
   }
 
   static async create (newContact) {
-      return db.query('INSERT INTO contact SET ?', newContact)
+    return db.query('INSERT INTO contact SET ?', newContact)
       .then(res => {
-          newContact.id = res.insertId;
-          return newContact;
+        newContact.id = res.insertId;
+        return newContact;
       });
   }
 }
