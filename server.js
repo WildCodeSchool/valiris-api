@@ -16,6 +16,8 @@ if (process.env.NODE_ENV !== 'production') {
 
 app.use('/contacts', require('./routes/contact.routes.js'));
 
+app.use('/messages', require('./routes/message.routes.js'));
+
 // set port, listen for requests
 const server = app.listen(PORT, () => {
   console.log('Server is running on port ' + PORT);
