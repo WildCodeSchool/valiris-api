@@ -30,7 +30,7 @@ class Contact {
   }
 
   static async contactAlreadyExists (contactEmail) {
-    return db.query('SELECT COUNT(id) AS count FROM tasks WHERE name = ?', [contactEmail]).then(rows => {
+    return db.query('SELECT COUNT(id) AS count FROM contact WHERE email = ?', [contactEmail]).then(rows => {
       if (rows[0].count) {
         return Promise.resolve(true);
       } else {
