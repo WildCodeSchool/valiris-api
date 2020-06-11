@@ -3,7 +3,7 @@ const Message = require('../models/message.model.js');
 
 class formController {
   static async createContact (req, res) {
-    const clientPayload = {firstname : req.body.firstname, lastname : req.body.lastname, phone: req.body.phone, email: req.body.email};
+    const clientPayload = { firstname: req.body.firstname, lastname: req.body.lastname, phone: req.body.phone, email: req.body.email };
 
     const { error } = Contact.validate(clientPayload);
     if (error) {
@@ -21,7 +21,7 @@ class formController {
   }
 
   static async createMessage (req, res) {
-    const clientPayload = {content : req.body.message};
+    const clientPayload = { content: req.body.message };
     const { error } = Message.validate(clientPayload);
     if (error) {
       console.log(JSON.stringify(error));

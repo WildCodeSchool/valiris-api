@@ -1,7 +1,6 @@
 const db = require('../db.js');
 const Joi = require('@hapi/joi');
 
-
 class Message {
   contructor (message) {
     this.id = message.id;
