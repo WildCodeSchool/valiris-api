@@ -16,8 +16,7 @@ beforeAll(async () => {
 });
 beforeAll(deleteAllDBData);
 afterEach(deleteAllDBData);
-afterAll(async (done) => {
+afterAll(async () => {
   await db.closeConnection();
   await closeApp();
-  done();
 });
