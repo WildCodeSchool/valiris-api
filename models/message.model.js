@@ -3,7 +3,7 @@ const Joi = require('@hapi/joi');
 
 class Message {
   contructor (message) {
-    this.id = message.id
+    this.id = message.id;
     this.content = message.content;
   }
 
