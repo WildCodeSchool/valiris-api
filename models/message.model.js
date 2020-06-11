@@ -5,6 +5,7 @@ class Message {
   contructor (message) {
     this.id = message.id;
     this.content = message.content;
+    this.contact_id = message.contact_id;
   }
 
   static validate (attributes) {
@@ -15,7 +16,7 @@ class Message {
   }
 
   static async createMessage (newMessage) {
-    return db.query('INSERT INTO message SET ?', newMessage)
+    return db.query('INSERT INTO message SET ? ', newMessage)
       .then(res => {
         newMessage.id = res.insertId;
         return newMessage;

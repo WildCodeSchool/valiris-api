@@ -4,6 +4,7 @@ const cors = require('cors');
 const YAML = require('yamljs');
 const swaggerDocument = YAML.load('./docs/swagger.yaml');
 
+
 const app = express();
 const PORT = process.env.PORT || (process.env.NODE_ENV === 'test' ? 3001 : 3000);
 
@@ -15,10 +16,13 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 app.use('/forms', require('./routes/form.routes.js'));
+app.use('/send', require('./routes/mailer.routes.js'));
+
 
 // set port, listen for requests
 const server = app.listen(PORT, () => {
   console.log('Server is running on port ' + PORT);
 });
+
 
 module.exports = server;
