@@ -1,9 +1,7 @@
-const nodemailer = require("nodemailer");
+const nodemailer = require('nodemailer');
 
 class mailer {
-
-  static async sendMail (req, res){
-
+  static async sendMail (req, res) {
     const outputUser = `
       <p style="color: red">Bonjour, ${req.body.firstname}, </p>
       <p>nous avons bien pris en compte votre demande de réservation, nous vous recontacterons rapidement.</p>
@@ -31,55 +29,51 @@ class mailer {
     <p>Cordialement, </p>
     <p> </p>
   `;
-  
-  
-  
-    let transporter = nodemailer.createTransport({
+
+    const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
         user: process.env.MAIL_USER,
         pass: process.env.MAIL_PASS
-      },
+      }
     });
-  
-    let mailOptionsUser = {
-        from: '"User" <vbouault@hotmail.fr>', 
-        to: 'testP3wcs@gmail.com', 
-        subject: 'Node Contact Request',
-        text: 'Hello world?',
-        html: outputUser 
+
+    const mailOptionsUser = {
+      from: '"User" <vbouault@hotmail.fr>',
+      to: 'testP3wcs@gmail.com',
+      subject: 'Node Contact Request',
+      text: 'Hello world?',
+      html: outputUser
     };
-  
+
     transporter.sendMail(mailOptionsUser, (error, info) => {
-        if (error) {
-            return res.status(420).send(error);
-        }
-        console.log('Message sent: %s', info.messageId);   
-        console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
-  
-        return res.sendStatus(200)
+      if (error) {
+        return res.status(420).send(error);
+      }
+      console.log('Message sent: %s', info.messageId);
+      console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+
+      return res.sendStatus(200);
     });
-  
-    let mailOptionsAdmin = {
-        from: '"Admin" <vbouault@hotmail.fr>', 
-        to: 'testP3wcs@gmail.com', 
-        subject: 'Node Contact Request', 
-        text: 'Hello world?', 
-        html: outputAdmin 
+
+    const mailOptionsAdmin = {
+      from: '"Admin" <vbouault@hotmail.fr>',
+      to: 'testP3wcs@gmail.com',
+      subject: 'Node Contact Request',
+      text: 'Hello world?',
+      html: outputAdmin
     };
-  
+
     transporter.sendMail(mailOptionsAdmin, (error, info) => {
-        if (error) {
-            return res.status(420).send(error);
-        }
-        console.log('Message sent: %s', info.messageId);   
-        console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
-  
-        return res.sendStatus(200)
+      if (error) {
+        return res.status(420).send(error);
+      }
+      console.log('Message sent: %s', info.messageId);
+      console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+
+      return res.sendStatus(200);
     });
   }
-
-
 }
 
 module.exports = mailer;

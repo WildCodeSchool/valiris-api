@@ -6,8 +6,8 @@ class formController {
     const clientPayloadContact = { firstname: req.body.firstname, lastname: req.body.lastname, phone: req.body.phone, email: req.body.email };
     const clientPayloadMessage = { content: req.body.message };
 
-    const errorContact  = Contact.validate(clientPayloadContact).error;
-    const errorMessage  = Message.validate(clientPayloadMessage).error;
+    const errorContact = Contact.validate(clientPayloadContact).error;
+    const errorMessage = Message.validate(clientPayloadMessage).error;
     if (errorContact) {
       console.log(JSON.stringify(errorContact));
       return res.status(422).send({ errorMessage: errorContact.message, errorDetails: errorContact.details });
@@ -25,8 +25,8 @@ class formController {
     }
 
     const newContact = await Contact.createContact(clientPayloadContact);
-    const newMessage = await Message.createMessage(clientPayloadMessage);
-    return res.status(201).send({...newContact, ...newMessage});
+    const newMessage = await Message.createMessage(clientPayloadMessage, newContact.id);
+    return res.status(201).send({ ...newContact, ...newMessage });
   }
 
   // static async createMessage (req, res) {
