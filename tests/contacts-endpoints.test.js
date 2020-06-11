@@ -12,7 +12,7 @@ describe('contact endpoints', () => {
           email: 'lens78@gmail.com',
           phone: '600000000'
         };
-        return request(app).post('/form').send(validContact).expect(201).then(res => {
+        return request(app).post('/forms').send(validContact).expect(201).then(res => {
           expect(_.isPlainObject(res.body));
           expect(res.body).toHaveProperty('lastname');
           expect(res.body).toHaveProperty('email');
