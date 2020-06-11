@@ -1,6 +1,6 @@
 const Contact = require('../models/contact.model.js');
 
-class contactController {
+class formController {
   static async create (req, res) {
     const clientPayload = req.body;
     const { error } = Contact.validate(clientPayload);
@@ -14,4 +14,4 @@ class contactController {
   }
 }
 
-module.exports = contactController;
+module.exports = formController;

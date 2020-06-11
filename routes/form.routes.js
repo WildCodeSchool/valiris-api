@@ -1,4 +1,4 @@
-const contactsController = require('../controllers/contact.controller.js');
+const contactsController = require('../controllers/form.controller.js');
 const router = require('express').Router();
 
 router.post('/', contactsController.create);
