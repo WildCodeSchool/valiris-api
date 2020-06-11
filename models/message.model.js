@@ -16,7 +16,7 @@ class Message {
   }
 
   static async createMessage (newMessage, newContactId) {
-    const fullMessage = {...newMessage, id_contact: newContactId}
+    const fullMessage = { ...newMessage, id_contact: newContactId };
     return db.query('INSERT INTO message SET ?', fullMessage)
       .then(res => {
         newMessage.id = res.insertId;
