@@ -1,7 +1,7 @@
 const Contact = require('../models/contact.model.js');
 
 class formController {
-  static async create (req, res) {
+  static async createContact (req, res) {
     const clientPayload = req.body;
     const { error } = Contact.validate(clientPayload);
     console.log(clientPayload);
