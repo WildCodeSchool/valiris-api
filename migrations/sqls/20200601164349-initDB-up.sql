@@ -1,7 +1,6 @@
 CREATE TABLE `apartment` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name_fr` varchar(255) DEFAULT NULL,
-  `name_en` varchar(255) DEFAULT NULL,
   `week_price` float DEFAULT NULL,
   `month_price` float DEFAULT NULL,
   `details_fr` text,
