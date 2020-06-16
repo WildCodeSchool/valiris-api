@@ -16,7 +16,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 app.use('/forms', require('./routes/form.routes.js'));
 app.use('/send', require('./routes/mailer.routes.js'));
-app.use('/apartment/', require('./routes/availabilities.routes.js'));
+app.use('/apartments/', require('./routes/availabilities.routes.js'));
 
 // set port, listen for requests
 const server = app.listen(PORT, () => {

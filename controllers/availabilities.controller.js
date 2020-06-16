@@ -3,7 +3,7 @@ const Availabilities = require('../models/availabilities.model.js');
 class AvailabilitiesController {
   static async findAll (req, res) {
     try {
-      const data = await Availabilities.getById(req.body.id);
+      const data = await Availabilities.getById(req.params.id);
       res.send(data);
     } catch (err) {
       res.status(500).send({
