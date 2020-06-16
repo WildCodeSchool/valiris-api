@@ -4,5 +4,6 @@ const router = require('express').Router();
 
 router.get('/:id', apartmentsController.findOne);
 router.get('/:id/availabilities', availabilitiesController.findAll);
+router.get('/', apartmentsController.findAll);
 
 module.exports = router;

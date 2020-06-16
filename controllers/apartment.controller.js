@@ -1,6 +1,6 @@
 const Apartment = require('../models/apartment.model.js');
 
-class ApartmentsController {
+class ApartmentController {
   static async findOne (req, res) {
     try {
       const data = await Apartment.findById(req.params.id);
@@ -14,6 +14,17 @@ class ApartmentsController {
       }
     }
   }
+
+  static async findAll (req, res) {
+    try {
+      const data = await Apartment.getAll();
+      res.status(200).send(data);
+    } catch (err) {
+      res.status(500).send({
+        errorMessage: err.message || 'Some error occurred while retrieving customers.'
+      });
+    }
+  }
 }
 
-module.exports = ApartmentsController;
+module.exports = ApartmentController;
