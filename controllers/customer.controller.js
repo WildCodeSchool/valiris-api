@@ -33,7 +33,7 @@ class CustomersController {
         email: c.email,
         active: !!c.active
       }));
-      
+
       res.send({ data: [] });
     } catch (err) {
       res.status(500).send({
