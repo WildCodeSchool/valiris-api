@@ -1,5 +1,6 @@
 const Contact = require('../models/contact.model.js');
 const Message = require('../models/message.model.js');
+const Mailer = require('../services/mailer.js');
 
 class formController {
   static async createForm (req, res) {
@@ -26,6 +27,7 @@ class formController {
 
     const newContact = await Contact.createContact(clientPayloadContact);
     const newMessage = await Message.createMessage(clientPayloadMessage, newContact.id);
+    const sendMail = await Mailer.sendMail(req.body);
     return res.status(201).send({ ...newContact, ...newMessage });
   }
 
