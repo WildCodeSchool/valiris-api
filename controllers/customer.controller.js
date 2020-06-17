@@ -27,14 +27,12 @@ class CustomersController {
 
   static async findAll (req, res) {
     try {
-      /*
-      const data = (await Customer.getAll()).map(c => new Customer(c)).map(c => ({
+      /*       const data = (await Customer.getAll()).map(c => new Customer(c)).map(c => ({
         id: c.id,
         name: c.fullName,
         email: c.email,
         active: !!c.active
-      }));
-      */
+      })); */
       res.send({ data: [] });
     } catch (err) {
       res.status(500).send({
