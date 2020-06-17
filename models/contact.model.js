@@ -30,7 +30,7 @@ class Contact {
   }
 
   static async findByEmail (email) {
-    return db.query(`SELECT * FROM contact WHERE email = ? `,[email])
+    return db.query('SELECT * FROM contact WHERE email = ? ', [email])
       .then(rows => {
         if (rows.length) {
           return Promise.resolve(rows[0]);
