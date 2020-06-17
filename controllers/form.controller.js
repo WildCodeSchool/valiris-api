@@ -27,7 +27,7 @@ class formController {
 
     const newContact = await Contact.createContact(clientPayloadContact);
     const newMessage = await Message.createMessage(clientPayloadMessage, newContact.id);
-    const sendMail = await Mailer.sendMail(req.body);
+    await Mailer.sendMail(req.body);
     return res.status(201).send({ ...newContact, ...newMessage });
   }
 

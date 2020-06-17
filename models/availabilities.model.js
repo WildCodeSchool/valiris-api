@@ -10,7 +10,7 @@ class Availabilities {
 
   static async getById (apartmentId) {
     return db.query('SELECT id, starting_date, ending_date, id_apartment FROM booking WHERE id_apartment = ?', [apartmentId])
-    .then(rows => rows[0] ? rows[0] : null);
+      .then(rows => rows[0] ? rows[0] : null);
   }
 }
 

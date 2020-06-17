@@ -62,12 +62,12 @@ class mailer {
           }
           console.log('Message sent: %s', info.messageId);
           console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
-    
+
           resolve();
         });
-      })
-    }
-    
+      });
+    };
+
     return Promise.all([sendMailPromisified(mailOptionsUser), sendMailPromisified(mailOptionsAdmin)]);
   }
 }
