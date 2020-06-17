@@ -29,6 +29,19 @@ class Contact {
       });
   }
 
+  static async findByEmail (email) {
+    return db.query(`SELECT * FROM contact WHERE email = ? `,[email])
+      .then(rows => {
+        if (rows.length) {
+          return Promise.resolve(rows[0]);
+        } else {
+          const err = new Error();
+          err.kind = 'not_found';
+          return Promise.reject(err);
+        }
+      });
+  }
+
   static async contactAlreadyExists (contactEmail) {
     return db.query('SELECT COUNT(id) AS count FROM contact WHERE email = ?', [contactEmail]).then(rows => {
       if (rows[0].count) {

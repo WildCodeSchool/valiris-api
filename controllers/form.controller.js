@@ -21,7 +21,9 @@ class formController {
 
     const contactExists = await Contact.contactAlreadyExists(clientPayloadContact.email);
     if (contactExists) {
-      const newMessage = await Message.createMessage(clientPayloadMessage);
+      const findExistcontact = await Contact.findByEmail(clientPayloadContact.email);
+      const newMessage = await Message.createMessage(clientPayloadMessage,findExistcontact.id);
+      await Mailer.sendMail(req.body);
       return res.status(201).send(newMessage);
     }
 
