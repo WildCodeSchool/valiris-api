@@ -13,7 +13,7 @@ class Apartment {
   }
 
   static async findById (id) {
-    return db.query('SELECT * FROM apartment LEFT JOIN secondary_picture ON apartment.id = secondary_picture.id_apartment WHERE apartment.id = ?', [parseInt(id, 10)])
+    return db.query('SELECT * FROM apartment JOIN secondary_picture ON apartment.id = secondary_picture.id_apartment WHERE apartment.id = ?', [parseInt(id, 10)])
       .then(rows => {
         if (rows) {
           const tab = [];
