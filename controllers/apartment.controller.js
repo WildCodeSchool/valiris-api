@@ -4,7 +4,7 @@ class ApartmentController {
   static async findOne (req, res) {
     try {
       const data = await Apartment.findById(req.params.id);
-      res.send({ data });
+      res.send(data);
     } catch (err) {
       if (err.kind === 'not_found') {
         res.status(404).send({ errorMessage: `Apartment with id ${req.params.id} not found.` });
