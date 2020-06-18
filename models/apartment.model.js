@@ -14,22 +14,21 @@ class Apartment {
 
   static async findById (id) {
     return db.query('SELECT * FROM apartment LEFT JOIN secondary_picture ON apartment.id = secondary_picture.id_apartment WHERE apartment.id = ?', [parseInt(id, 10)])
-    .then(rows => {
-      if (rows){
-      let tab= [];
-      rows.forEach(r => {
-        tab.push(r.url)
-      })
-      rows[0].url = tab;
-      return rows[0]
-    } else {
-      return null
-    }
-  })
-}
+      .then(rows => {
+        if (rows) {
+          const tab = [];
+          rows.forEach(r => {
+            tab.push(r.url);
+          });
+          rows[0].url = tab;
+          return rows[0];
+        } else {
+          return null;
+        }
+      });
+  }
 
-
-// .then(rows => rows ? rows : null)
+  // .then(rows => rows ? rows : null)
 
   static async getAll (result) {
     return db.query('SELECT * FROM apartment');
