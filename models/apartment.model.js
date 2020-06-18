@@ -13,8 +13,20 @@ class Apartment {
   // }
 
   static async findById (id) {
-    return db.query('SELECT * FROM apartment LEFT JOIN secondary_picture ON apartment.id = secondary_picture.id_apartment WHERE apartment.id = ?', [parseInt(id, 10)])
+    return db.query('SELECT * FROM apartment JOIN secondary_picture ON apartment.id = secondary_picture.id_apartment WHERE apartment.id = ?', [parseInt(id, 10)])
       .then(rows => rows[0] ? rows[0] : null);
+    //   .then(rows => {
+    //     if (rows){
+    //     tab= []
+    //     rows.foreach(r => {
+    //       tab.push(r.url)
+    //     })
+    //     rows[0].url = tab
+    //     return rows[0]
+    //   } else {
+    //     return null
+    //   }
+    // })
   }
 
   static async getAll (result) {
