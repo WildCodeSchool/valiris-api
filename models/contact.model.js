@@ -21,12 +21,22 @@ class Contact {
     return schema.validate(attributes);
   }
 
-  static async create (newContact) {
+  static async createContact (newContact) {
     return db.query('INSERT INTO contact SET ?', newContact)
       .then(res => {
         newContact.id = res.insertId;
         return newContact;
       });
+  }
+
+  static async contactAlreadyExists (contactEmail) {
+    return db.query('SELECT COUNT(id) AS count FROM contact WHERE email = ?', [contactEmail]).then(rows => {
+      if (rows[0].count) {
+        return Promise.resolve(true);
+      } else {
+        return Promise.resolve(false);
+      }
+    });
   }
 }
 
