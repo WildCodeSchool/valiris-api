@@ -6,32 +6,56 @@ class Apartment {
     this.name = appartment.name;
     this.detail_fr = appartment.detail_fr;
     this.detail_en = appartment.detail_en;
+    this.title_fr = appartment.title_fr;
+    this.title_en = appartment.title_en;
     this.week_price = appartment.week_price;
     this.month_price = appartment.month_price;
     this.main_picture_url = appartment.main_picture_url;
     this.secondary_picture_url = appartment.secondary_picture_url;
   }
 
-  static async findById (id) {
-    return db.query('SELECT * FROM apartment JOIN secondary_picture ON apartment.id = secondary_picture.id_apartment WHERE apartment.id = ?', [parseInt(id, 10)])
+  static async findById (id, lang) {
+    return db.query(`SELECT a.id, a.name, a.details_${lang}, a.week_price, a.month_price, a.title_${lang}, a.main_picture_url, sp.id , sp.url FROM apartment a JOIN secondary_picture sp ON a.id = sp.id_apartment WHERE a.id = ?`, [parseInt(id, 10)])
       .then(rows => {
         if (rows) {
-          const tab = [];
+          let tabUrl = [];
           rows.forEach(r => {
-            tab.push(r.url);
+            tabUrl.push(r.url);
           });
-          rows[0].url = tab;
-          return rows[0];
+          return {
+            id : rows[0].id,
+            name : rows[0].name,
+            details : rows[0].details_fr || rows[0].details_en,
+            title : rows[0].title_fr || rows[0].title_en,
+            week_price : rows[0].week_price,
+            month_price : rows[0].month_price,
+            main_picture_url : rows[0].main_picture_url,
+            url : tabUrl
+          }
         } else {
           return null;
         }
       });
+      
   }
 
   // .then(rows => rows ? rows : null)
 
-  static async getAll (result) {
-    return db.query('SELECT * FROM apartment');
+  static async getAll (lang) {
+    return db.query(`SELECT id, name, details_${lang}, week_price, month_price, title_${lang}, main_picture_url FROM apartment`)
+    .then(res => {
+      return res.map(r => {
+        return {
+        id : r.id,
+        name : r.name,
+        details : r.details_fr || r.details_en,
+        title : r.title_fr || r.title_en,
+        week_price : r.week_price,
+        month_price : r.month_price,
+        main_picture_url : r.main_picture_url
+        }
+      })
+    });
   }
 }
 

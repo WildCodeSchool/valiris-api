@@ -1,6 +1,6 @@
 const formController = require('../controllers/form.controller.js');
 const router = require('express').Router();
 
-router.post('/', formController.createForm);
+router.post('/:lang', formController.createForm);
 
 module.exports = router;

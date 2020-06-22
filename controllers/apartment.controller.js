@@ -3,7 +3,7 @@ const Apartment = require('../models/apartment.model.js');
 class ApartmentController {
   static async findOne (req, res) {
     try {
-      const data = await Apartment.findById(req.params.id);
+      const data = await Apartment.findById(req.params.id, req.params.lang);
       res.send(data);
     } catch (err) {
       if (err.kind === 'not_found') {
@@ -17,7 +17,7 @@ class ApartmentController {
 
   static async findAll (req, res) {
     try {
-      const data = await Apartment.getAll();
+      const data = await Apartment.getAll(req.params.lang);
       res.status(200).send(data);
     } catch (err) {
       res.status(500).send({
