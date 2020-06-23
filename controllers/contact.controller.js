@@ -2,7 +2,7 @@ const Contact = require('../models/contact.model.js');
 const Message = require('../models/message.model.js');
 const Mailer = require('../services/mailer.js');
 
-class formController {
+class contactController {
   static async createForm (req, res) {
     const clientPayloadContact = { firstname: req.body.firstname, lastname: req.body.lastname, phone: req.body.phone, email: req.body.email };
     const clientPayloadMessage = { content: req.body.message };
@@ -23,15 +23,15 @@ class formController {
     if (contactExists) {
       const findExistcontact = await Contact.findByEmail(clientPayloadContact.email);
       const newMessage = await Message.createMessage(clientPayloadMessage, findExistcontact.id);
-      await Mailer.sendMail(req.body, req.params.lang);
+      await Mailer.sendMail(req.body, req.currentLanguage);
       return res.status(201).send(newMessage);
     }
 
     const newContact = await Contact.createContact(clientPayloadContact);
     const newMessage = await Message.createMessage(clientPayloadMessage, newContact.id);
-    await Mailer.sendMail(req.body, req.params.lang);
+    await Mailer.sendMail(req.body, req.currentLanguage);
     return res.status(201).send({ ...newContact, ...newMessage });
   }
 }
 
-module.exports = formController;
+module.exports = contactController;
