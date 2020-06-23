@@ -38,8 +38,6 @@ class Apartment {
       });
   }
 
-  // .then(rows => rows ? rows : null)
-
   static async getAll (lang) {
     return db.query(`SELECT id, name, details_${lang}, week_price, month_price, title_${lang}, main_picture_url FROM apartment`)
       .then(res => {
