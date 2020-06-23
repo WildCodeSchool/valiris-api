@@ -32,7 +32,6 @@ class formController {
     await Mailer.sendMail(req.body, req.params.lang);
     return res.status(201).send({ ...newContact, ...newMessage });
   }
-
 }
 
 module.exports = formController;
