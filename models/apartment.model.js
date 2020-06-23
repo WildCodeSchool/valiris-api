@@ -27,9 +27,9 @@ class Apartment {
             name: rows[0].name,
             details: rows[0].details_fr || rows[0].details_en,
             title: rows[0].title_fr || rows[0].title_en,
-            week_price: rows[0].week_price,
-            month_price: rows[0].month_price,
-            main_picture_url: rows[0].main_picture_url,
+            weekPrice: rows[0].week_price,
+            monthPrice: rows[0].month_price,
+            mainPictureUrl: rows[0].main_picture_url,
             url: tabUrl
           };
         } else {
@@ -49,9 +49,9 @@ class Apartment {
             name: r.name,
             details: r.details_fr || r.details_en,
             title: r.title_fr || r.title_en,
-            week_price: r.week_price,
-            month_price: r.month_price,
-            main_picture_url: r.main_picture_url
+            weekPrice: r.week_price,
+            monthPrice: r.month_price,
+            mainPictureUrl: r.main_picture_url
           };
         });
       });
