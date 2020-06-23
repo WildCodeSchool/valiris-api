@@ -75,8 +75,8 @@ class mailer {
           if (error) {
             reject(error);
           }
-          console.log('Message sent: %s', info.messageId);
-          console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+/*           console.log('Message sent: %s', info.messageId);
+          console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info)); */
 
           resolve();
         });
