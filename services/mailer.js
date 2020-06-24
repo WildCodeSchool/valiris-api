@@ -80,7 +80,9 @@ class mailer {
       });
     };
 
-    return Promise.all([sendMailPromisified(mailOptionsUser), sendMailPromisified(mailOptionsAdmin)]);
+    if (process.env.NODE_ENV !== 'test') {
+      return Promise.all([sendMailPromisified(mailOptionsUser), sendMailPromisified(mailOptionsAdmin)]);
+    }
   }
 }
 
