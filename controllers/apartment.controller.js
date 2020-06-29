@@ -21,7 +21,7 @@ class ApartmentController {
       res.status(200).send(data);
     } catch (err) {
       res.status(500).send({
-        errorMessage: err.message || 'Some error occurred while retrieving customers.'
+        errorMessage: err.message || 'Some error occurred while retrieving apartments.'
       });
     }
   }
