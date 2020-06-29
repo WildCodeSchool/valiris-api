@@ -14,22 +14,38 @@ class Apartment {
     this.secondary_picture_url = appartment.secondary_picture_url;
   }
 
-  static async findById (id, lang) {
-    return db.query(`SELECT a.id, a.name, a.details_${lang}, a.week_price, a.month_price, a.title_${lang}, a.main_picture_url, sp.id , sp.url FROM apartment a JOIN secondary_picture sp ON a.id = sp.id_apartment WHERE a.id = ?`, [parseInt(id, 10)])
+  static async findById (id, lang = 'fr') {
+    const detailsLang = `details_${lang}`;
+    const titleLang = `title_${lang}`;
+
+    return db.query(`
+      SELECT 
+      a.id, 
+      a.name, 
+      a.${detailsLang}, 
+      a.week_price, 
+      a.month_price, 
+      a.${titleLang}, 
+      a.main_picture_url, 
+      sp.id , 
+      sp.url 
+      FROM apartment a LEFT JOIN secondary_picture sp ON a.id = sp.id_apartment 
+      WHERE a.id = ?`, [parseInt(id, 10)])
       .then(rows => {
         if (rows) {
           const tabUrl = [];
           rows.forEach(r => {
             tabUrl.push(r.url);
           });
+          const a = rows[0];
           return {
-            id: rows[0].id,
-            name: rows[0].name,
-            details: rows[0].details_fr || rows[0].details_en,
-            title: rows[0].title_fr || rows[0].title_en,
-            weekPrice: rows[0].week_price,
-            monthPrice: rows[0].month_price,
-            mainPictureUrl: rows[0].main_picture_url,
+            id: a.id,
+            name: a.name,
+            details: a[detailsLang],
+            title: a[titleLang],
+            weekPrice: a.week_price,
+            monthPrice: a.month_price,
+            mainPictureUrl: a.main_picture_url,
             url: tabUrl
           };
         } else {
@@ -39,14 +55,17 @@ class Apartment {
   }
 
   static async getAll (lang) {
-    return db.query(`SELECT id, name, details_${lang}, week_price, month_price, title_${lang}, main_picture_url FROM apartment`)
+    const detailsLang = `details_${lang}`;
+    const titleLang = `title_${lang}`;
+
+    return db.query(`SELECT id, name, ${detailsLang}, week_price, month_price, ${titleLang}, main_picture_url FROM apartment`)
       .then(res => {
         return res.map(r => {
           return {
             id: r.id,
             name: r.name,
-            details: r.details_fr || r.details_en,
-            title: r.title_fr || r.title_en,
+            details: r[detailsLang],
+            title: r[titleLang],
             weekPrice: r.week_price,
             monthPrice: r.month_price,
             mainPictureUrl: r.main_picture_url
