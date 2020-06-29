@@ -37,7 +37,7 @@ class Apartment {
           rows.forEach(r => {
             tabUrl.push(r.url);
           });
-          const a = rows[0]
+          const a = rows[0];
           return {
             id: a.id,
             name: a.name,
