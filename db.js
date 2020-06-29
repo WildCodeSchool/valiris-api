@@ -1,4 +1,3 @@
-require('dotenv').config();
 const mysql = require('mysql');
 
 class Database {
