@@ -8,7 +8,7 @@ class User {
   static async create (name, email, password) {
     const hash = await argon2.hash(password);
     return db.query('insert into users (name, email, encrypted_password) values (?, ?, ?)', [name, email, hash])
-      .then(res => ({id: res.insertId, name, email}));
+      .then(res => ({ id: res.insertId, name, email }));
   }
 
   static async findById (id) {
@@ -21,18 +21,18 @@ class User {
       .then(rows => rows[0] ? rows[0] : null);
   }
 
-  static async login(email, password) {
-    const user = await User.findByEmail(email)
+  static async login (email, password) {
+    const user = await User.findByEmail(email);
     if (!user) {
-      throw new Error('user not found')
+      throw new Error('user not found');
     } else {
       const passwordIsValid = await argon2.verify(user.encrypted_password, password);
       if (!passwordIsValid) {
-        throw new Error('incorrect password')
+        throw new Error('incorrect password');
       } else {
-        const data = {name: user.name, id: user.id}
-        const token = jwt.sign(data, JWT_PRIVATE_KEY, {expiresIn: '24h'})
-        return Promise.resolve({token, data})
+        const data = { name: user.name, id: user.id };
+        const token = jwt.sign(data, JWT_PRIVATE_KEY, { expiresIn: '24h' });
+        return Promise.resolve({ token, data });
       }
     }
   }
