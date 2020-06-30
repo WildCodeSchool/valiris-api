@@ -7,7 +7,7 @@ class contactController {
   static async createForm (req, res) {
     const clientPayloadContact = { firstname: req.body.firstname, lastname: req.body.lastname, phone: req.body.phone, email: req.body.email };
     const clientPayloadMessage = { content: req.body.message };
-    const clientPayloadBooking = { id_apartment: req.body.apartment, starting_date: req.body.startDate, ending_date: req.body.endDate}
+    const clientPayloadBooking = { id_apartment: req.body.apartment, starting_date: req.body.startDate, ending_date: req.body.endDate };
 
     const errorContact = Contact.validate(clientPayloadContact).error;
     const errorMessage = Message.validate(clientPayloadMessage).error;
