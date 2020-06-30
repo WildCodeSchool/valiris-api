@@ -1,10 +1,12 @@
 CREATE TABLE `apartment` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name_fr` varchar(255) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
   `week_price` float DEFAULT NULL,
   `month_price` float DEFAULT NULL,
   `details_fr` text,
   `details_en` text,
+  `title_fr` varchar(255),
+  `title_en` varchar(255),
   `main_picture_url` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
