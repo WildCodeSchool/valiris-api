@@ -17,10 +17,10 @@ class BookingController {
       const data = await Booking.updateOne(req.body);
       res.status(200).send(data);
     } catch (err) {
-      console.log(err.message)
+      console.log(err.message);
       res.status(500).send({
         errorMessage: 'An error happened while you tried to validate a booking.'
-      })
+      });
     }
   }
 }

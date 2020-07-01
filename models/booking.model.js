@@ -17,9 +17,8 @@ class Booking {
 
   static async updateOne (bookingDetails) {
     return db.query('UPDATE booking SET validation = 1 WHERE id = ?', [bookingDetails.id])
-    .then(row => db.query(`SELECT * FROM booking WHERE id = ${bookingDetails.id}`))
+      .then(row => db.query(`SELECT * FROM booking WHERE id = ${bookingDetails.id}`));
   }
-
 }
 
 module.exports = Booking;
