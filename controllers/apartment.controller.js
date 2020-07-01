@@ -39,6 +39,18 @@ class ApartmentController {
       }
     }
   }
+
+  static async create (req, res) {
+    try {
+      const main_picture_url = req.file ? req.file.path : null
+      const data = await Apartment.createApartment({...req.body, main_picture_url});
+      res.status(201).send(data);
+    } catch (err) {
+      res.status(500).send({
+        errorMessage: err.message || `Some error occurred while trying to create apartment ${req.body.id}.`
+      });
+    }
+  }
 }
 
 module.exports = ApartmentController;
