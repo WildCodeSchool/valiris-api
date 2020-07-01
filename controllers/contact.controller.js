@@ -35,19 +35,19 @@ class contactController {
 
   static async findAll (req, res) {
     try {
-      const data = await Contact.getAll()
-      res.status(200).send(data)
+      const data = await Contact.getAll();
+      res.status(200).send(data);
     } catch (err) {
       res.status(500).send({
         errorMessage: err.message || 'Some error occurred while retrieving contacts.'
-      })
+      });
     }
   }
 
   static async findOne (req, res) {
-    try{
-      const data = await Contact.findById(req.params.id)
-      res.status(200).send(data)
+    try {
+      const data = await Contact.findById(req.params.id);
+      res.status(200).send(data);
     } catch (err) {
       if (err.kind === 'not_found') {
         res.status(404).send({ errorMessage: `Contact with id ${req.params.id} not found.` });
@@ -91,7 +91,6 @@ class contactController {
   //     }
   //   }
   // }
-
 }
 
 module.exports = contactController;

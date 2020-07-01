@@ -52,13 +52,13 @@ class Contact {
   }
 
   static async getAll () {
-    return db.query('SELECT * FROM contact')
+    return db.query('SELECT * FROM contact');
   }
 
   static async findById (id) {
     return db.query('SELECT * FROM contact WHERE id = ?', [id]).then(rows => {
-      return rows[0]
-    })
+      return rows[0];
+    });
   }
 
   static async updateById (id, contact) {
@@ -81,7 +81,6 @@ class Contact {
   //     }
   //   });
   // }
-
 }
 
 module.exports = Contact;
