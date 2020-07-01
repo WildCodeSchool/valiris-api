@@ -3,6 +3,7 @@ const availabilitiesController = require('../controllers/availabilities.controll
 const router = require('express').Router();
 
 router.get('/:id', apartmentsController.findOne);
+router.get('/:id/back', apartmentsController.findOneBack);
 router.get('/:id/availabilities', availabilitiesController.findAll);
 router.get('/', apartmentsController.findAll);
 

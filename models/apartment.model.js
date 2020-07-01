@@ -73,6 +73,35 @@ class Apartment {
         });
       });
   }
+
+  static async getOneBack (id) {
+    return db.query(`
+      SELECT 
+      a.id, 
+      a.name, 
+      a.details_fr,
+      a.details_en,
+      a.week_price, 
+      a.month_price, 
+      a.title_fr,
+      a.title_en,
+      a.main_picture_url, 
+      sp.id , 
+      sp.url
+      FROM apartment a LEFT JOIN secondary_picture sp ON a.id = sp.id_apartment WHERE a.id = ?`, [id])
+      .then(rows => {
+        console.log(rows)
+        if (rows) {
+          const tabUrl = [];
+          rows.forEach(r => {
+            tabUrl.push(r.url);
+          });
+          return { ...rows[0], url: tabUrl };
+        } else {
+          return null;
+        }
+      });
+  }
 }
 
 module.exports = Apartment;
