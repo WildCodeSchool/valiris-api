@@ -21,7 +21,7 @@ process.on('uncaughtException', error => {
 });
 process.on('beforeExit', () => {
   app.close((err) => {
-    if (err) console.error(JSON.stringify(error), error.stack);
+    if (err) console.error(JSON.stringify(err), err.stack);
   });
 });
 

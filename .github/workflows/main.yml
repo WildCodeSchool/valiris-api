@@ -35,3 +35,4 @@ jobs:
           DB_PASS_TEST: WildWildPass
           DB_NAME_TEST: customer_api_database_test
           DB_PORT_TEST: 3306
+          JWT_PRIVATE_KEY: efey86fiUHUI675jhejhz!!3
