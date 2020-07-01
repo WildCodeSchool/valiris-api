@@ -50,6 +50,38 @@ class Contact {
       }
     });
   }
+
+  static async getAll () {
+    return db.query('SELECT * FROM contact')
+  }
+
+  static async findById (id) {
+    return db.query('SELECT * FROM contact WHERE id = ?', [id]).then(rows => {
+      return rows[0]
+    })
+  }
+
+  static async updateById (id, contact) {
+    return db.query(
+      'UPDATE contact SET lastname = ?, firstname = ?, phone = ?, email = ? WHERE id = ?',
+      [contact.lastname, contact.firstname, contact.phone, contact.email, id]
+    ).then(() => this.findById(id));
+  }
+
+  // static async remove (id) {
+  //   console.log(id)
+  //   return db.query('DELETE FROM contact WHERE id = ?', [id]).then(res => {
+  //     console.log(res)
+  //     if (res.affectedRows !== 0) {
+  //       return Promise.resolve();
+  //     } else {
+  //       const err = new Error();
+  //       err.kind = 'not_found';
+  //       return Promise.reject(err);
+  //     }
+  //   });
+  // }
+
 }
 
 module.exports = Contact;

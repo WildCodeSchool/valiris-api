@@ -32,6 +32,66 @@ class contactController {
     await Mailer.sendMail(req.body, req.currentLanguage);
     return res.status(201).send({ ...newContact, ...newMessage });
   }
+
+  static async findAll (req, res) {
+    try {
+      const data = await Contact.getAll()
+      res.status(200).send(data)
+    } catch (err) {
+      res.status(500).send({
+        errorMessage: err.message || 'Some error occurred while retrieving contacts.'
+      })
+    }
+  }
+
+  static async findOne (req, res) {
+    try{
+      const data = await Contact.findById(req.params.id)
+      res.status(200).send(data)
+    } catch (err) {
+      if (err.kind === 'not_found') {
+        res.status(404).send({ errorMessage: `Contact with id ${req.params.id} not found.` });
+      } else {
+        console.log(err);
+        res.status(500).send({ errorMessage: 'Error retrieving contact with id ' + req.params.id });
+      }
+    }
+  }
+
+  static async update (req, res) {
+    if (!req.body) {
+      res.status(400).send({ errorMessage: 'Content can not be empty!' });
+    }
+
+    try {
+      const data = await Contact.updateById(req.params.id, req.body);
+      res.status(200).send(data);
+    } catch (err) {
+      if (err.kind === 'not_found') {
+        res.status(404).send({ errorMessage: `Contact with id ${req.params.id} not found.` });
+      } else {
+        res.status(500).send({ errorMessage: 'Error updating contact with id ' + req.params.id });
+      }
+    }
+  }
+
+  // static async delete (req, res) {
+  //   try {
+  //     await Contact.remove(req.params.id);
+  //     res.send({ message: 'Contact was deleted successfully!' });
+  //   } catch (err) {
+  //     if (err.kind === 'not_found') {
+  //       res.status(404).send({
+  //         message: `Not found contact with id ${req.params.id}.`
+  //       });
+  //     } else {
+  //       res.status(500).send({
+  //         message: 'Could not delete contact with id ' + req.params.id + err
+  //       });
+  //     }
+  //   }
+  // }
+
 }
 
 module.exports = contactController;
