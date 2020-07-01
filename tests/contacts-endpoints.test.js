@@ -11,7 +11,7 @@ describe('form endpoints', () => {
           firstname: 'Lancelot',
           email: 'lens78@gmail.com',
           phone: '600000000',
-          message: 'hello world', 
+          message: 'hello world',
           apartment: '1'
         };
         return request(app).post('/contacts').send(validContact).expect(201).then(res => {
