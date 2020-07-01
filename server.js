@@ -35,6 +35,7 @@ if (process.env.NODE_ENV !== 'production') {
 app.use(extractClientLanguage);
 app.use('/contacts', require('./routes/contact.routes.js'));
 app.use('/apartments', require('./routes/apartment.routes.js'));
+app.use('/bookings', require('./routes/booking.routes.js'));
 
 app.use(extractToken);
 app.use('/users', require('./routes/user.routes.js'));
