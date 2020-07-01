@@ -1,4 +1,4 @@
-CREATE TABLE `valiris_api_database`.`users` (
+CREATE TABLE `users` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `email` VARCHAR(255) NOT NULL,
   `name` VARCHAR(255) NOT NULL,
