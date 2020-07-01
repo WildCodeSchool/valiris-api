@@ -44,6 +44,22 @@ class contactController {
     }
   }
 
+  static async createContact (req, res){
+    try {
+      const contactExists = await Contact.contactAlreadyExists(req.body.email);
+      if(contactExists){
+        res.status(400).send({ errorMessage : 'Email already extist'});
+      } else {
+        const newContact = await Contact.createContact(req.body);
+        res.status(200).send(newContact)
+      }
+    } catch (err) {
+      res.status(500).send({
+        errorMessage: err.message || 'Some error occurred while creating the contact.'
+      });
+    }
+  }
+
   static async findOne (req, res) {
     try {
       const data = await Contact.findById(req.params.id);
@@ -75,22 +91,22 @@ class contactController {
     }
   }
 
-  // static async delete (req, res) {
-  //   try {
-  //     await Contact.remove(req.params.id);
-  //     res.send({ message: 'Contact was deleted successfully!' });
-  //   } catch (err) {
-  //     if (err.kind === 'not_found') {
-  //       res.status(404).send({
-  //         message: `Not found contact with id ${req.params.id}.`
-  //       });
-  //     } else {
-  //       res.status(500).send({
-  //         message: 'Could not delete contact with id ' + req.params.id + err
-  //       });
-  //     }
-  //   }
-  // }
+  static async delete (req, res) {
+    try {
+      await Contact.remove(req.params.id);
+      res.send({ message: 'Contact was deleted successfully!' });
+    } catch (err) {
+      if (err.kind === 'not_found') {
+        res.status(404).send({
+          message: `Not found contact with id ${req.params.id}.`
+        });
+      } else {
+        res.status(500).send({
+          message: 'Could not delete contact with id ' + req.params.id + err
+        });
+      }
+    }
+  }
 }
 
 module.exports = contactController;

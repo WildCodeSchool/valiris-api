@@ -68,19 +68,17 @@ class Contact {
     ).then(() => this.findById(id));
   }
 
-  // static async remove (id) {
-  //   console.log(id)
-  //   return db.query('DELETE FROM contact WHERE id = ?', [id]).then(res => {
-  //     console.log(res)
-  //     if (res.affectedRows !== 0) {
-  //       return Promise.resolve();
-  //     } else {
-  //       const err = new Error();
-  //       err.kind = 'not_found';
-  //       return Promise.reject(err);
-  //     }
-  //   });
-  // }
+  static async remove (id) {
+    return db.query('DELETE FROM contact WHERE id = ?', [id]).then(res => {
+      if (res.affectedRows !== 0) {
+        return Promise.resolve();
+      } else {
+        const err = new Error();
+        err.kind = 'not_found';
+        return Promise.reject(err);
+      }
+    });
+  }
 }
 
 module.exports = Contact;
