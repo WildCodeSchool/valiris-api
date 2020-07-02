@@ -1,6 +1,6 @@
+const Mailer = require('../services/mailer.js');
 const Contact = require('../models/contact.model.js');
 const Message = require('../models/message.model.js');
-const Mailer = require('../services/mailer.js');
 const Booking = require('../models/booking.model.js');
 
 class contactController {
@@ -24,15 +24,15 @@ class contactController {
     const contactExists = await Contact.contactAlreadyExists(clientPayloadContact.email);
     if (contactExists) {
       const findExistcontact = await Contact.findByEmail(clientPayloadContact.email);
-      const newMessage = await Message.createMessage(clientPayloadMessage, findExistcontact.id);
       const newBooking = await Booking.createBooking(clientPayloadBooking, findExistcontact.id);
+      const newMessage = await Message.createMessage(clientPayloadMessage, findExistcontact.id, newBooking.id);
       await Mailer.sendMail(req.body, req.currentLanguage);
       return res.status(201).send({ ...newMessage, ...newBooking });
     }
 
     const newContact = await Contact.createContact(clientPayloadContact);
-    const newMessage = await Message.createMessage(clientPayloadMessage, newContact.id);
     const newBooking = await Booking.createBooking(clientPayloadBooking, newContact.id);
+    const newMessage = await Message.createMessage(clientPayloadMessage, newContact.id, newBooking.id);
     await Mailer.sendMail(req.body, req.currentLanguage);
     return res.status(201).send({ ...newContact, ...newMessage, ...newBooking });
   }

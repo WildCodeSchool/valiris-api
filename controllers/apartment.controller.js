@@ -18,7 +18,9 @@ class ApartmentController {
   static async findAll (req, res) {
     try {
       const data = await Apartment.getAll(req.currentLanguage);
-      res.status(200).send(data);
+      res.status(200).send(data.map(data => (
+        { ...data, mainPictureUrl: data.main_picture_url ? (req.headers.host + '/' + data.main_picture_url) : undefined }
+      )));
     } catch (err) {
       res.status(500).send({
         errorMessage: err.message || 'Some error occurred while retrieving apartments.'
@@ -44,9 +46,11 @@ class ApartmentController {
     try {
       const mainPictureUrl = req.file ? req.file.path : null;
       console.log(req.file);
-      const data = await Apartment.createApartment({ ...req.body, mainPictureUrl });
+      console.log(req.body);
+      const data = await Apartment.createApartment({ ...req.body, main_picture_url: mainPictureUrl });
       res.status(201).send(data);
     } catch (err) {
+      console.error(err);
       res.status(500).send({
         errorMessage: err.message || `Some error occurred while trying to create apartment ${req.body.id}.`
       });

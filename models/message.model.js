@@ -15,12 +15,13 @@ class Message {
     return schema.validate(attributes);
   }
 
-  static async createMessage (newMessage, newContactId) {
-    const fullMessage = { ...newMessage, id_contact: newContactId };
+  static async createMessage (newMessage, newContactId, newBookingId) {
+    const fullMessage = { ...newMessage, id_contact: newContactId, id_booking: newBookingId };
     return db.query('INSERT INTO message SET ?', fullMessage)
       .then(res => {
         newMessage.id = res.insertId;
         newMessage.id_contact = newContactId;
+        newMessage.id_booking = newBookingId
         return newMessage;
       });
   }
