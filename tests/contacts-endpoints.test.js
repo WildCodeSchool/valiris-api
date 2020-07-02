@@ -2,7 +2,7 @@ const request = require('supertest');
 const app = require('../server.js');
 const _ = require('lodash');
 
-describe('form endpoints', () => {
+describe('contact endpoints', () => {
   describe('POST /contacts', () => {
     describe('when the payload is valid', () => {
       it('returns 201 status code and the updated object when everything is provided', async () => {
