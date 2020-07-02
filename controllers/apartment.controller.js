@@ -42,6 +42,7 @@ class ApartmentController {
 
   static async create (req, res) {
     try {
+      console.log(req.file)
       const main_picture_url = req.file ? req.file.path : null
       const data = await Apartment.createApartment({...req.body, main_picture_url});
       res.status(201).send(data);
