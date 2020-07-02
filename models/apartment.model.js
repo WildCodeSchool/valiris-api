@@ -35,7 +35,7 @@ class Apartment {
         if (rows.length) {
           const tabUrl = [];
           rows.forEach(r => {
-            tabUrl.push(r.url);
+            if (r.url) tabUrl.push(r.url);
           });
           const a = rows[0];
           return Promise.resolve({
@@ -96,7 +96,7 @@ class Apartment {
         if (rows.length) {
           const tabUrl = [];
           rows.forEach(r => {
-            tabUrl.push(r.url);
+            if (r.url) tabUrl.push(r.url);
           });
           return Promise.resolve({ ...rows[0], url: tabUrl });
         } else {
