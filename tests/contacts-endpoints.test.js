@@ -24,6 +24,6 @@ describe('contact endpoints', () => {
           expect(res.body.firstname).toBe('Lancelot');
         });
       });
-    })
+    });
   });
 });
