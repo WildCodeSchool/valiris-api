@@ -35,7 +35,7 @@ class Apartment {
         if (rows.length) {
           const tabUrl = [];
           rows.forEach(r => {
-            tabUrl.push(r.url);
+            if (r.url) tabUrl.push(r.url);
           });
           const a = rows[0];
           return Promise.resolve({
@@ -92,11 +92,11 @@ class Apartment {
       sp.url
       FROM apartment a LEFT JOIN secondary_picture sp ON a.id = sp.id_apartment WHERE a.id = ?`, [id])
       .then(rows => {
-        console.log(rows)
+        console.log(rows);
         if (rows.length) {
           const tabUrl = [];
           rows.forEach(r => {
-            tabUrl.push(r.url);
+            if (r.url) tabUrl.push(r.url);
           });
           return Promise.resolve({ ...rows[0], url: tabUrl });
         } else {
@@ -106,13 +106,14 @@ class Apartment {
         }
       });
   }
-  static async createApartment(newApartment) {
+
+  static async createApartment (newApartment) {
     return db.query('INSERT INTO apartment SET ?', [newApartment])
-    .then(res => {
-      newApartment.id = res.insertId;
-      return newApartment;
-    });
-  } 
+      .then(res => {
+        newApartment.id = res.insertId;
+        return newApartment;
+      });
+  }
 }
 
 module.exports = Apartment;
