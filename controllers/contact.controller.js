@@ -48,14 +48,14 @@ class contactController {
     }
   }
 
-  static async createContact (req, res){
+  static async createContact (req, res) {
     try {
       const contactExists = await Contact.contactAlreadyExists(req.body.email);
-      if(contactExists){
-        res.status(400).send({ errorMessage : 'Email already extist'});
+      if (contactExists) {
+        res.status(400).send({ errorMessage: 'Email already extist' });
       } else {
         const newContact = await Contact.createContact(req.body);
-        res.status(200).send(newContact)
+        res.status(200).send(newContact);
       }
     } catch (err) {
       res.status(500).send({

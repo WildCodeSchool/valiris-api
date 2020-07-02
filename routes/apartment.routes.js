@@ -7,6 +7,6 @@ router.get('/:id', apartmentsController.findOne);
 router.get('/:id/back', apartmentsController.findOneBack);
 router.get('/:id/availabilities', availabilitiesController.findAll);
 router.get('/', apartmentsController.findAll);
-router.post('/', handleImageUpload,  apartmentsController.create)
+router.post('/', handleImageUpload, apartmentsController.create);
 
 module.exports = router;
