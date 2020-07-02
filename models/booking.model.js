@@ -2,7 +2,10 @@ const db = require('../db.js');
 
 class Booking {
   static async getAll () {
-    return db.query('SELECT DISTINCT b.id, c.firstname, c.lastname, b.starting_date, b.ending_date, m.content, b.validation FROM booking b JOIN contact c ON c.id = b.id_contact JOIN message m ON b.id = m.id_booking WHERE validation = 0');
+    return db.query('SELECT DISTINCT b.id, c.firstname, c.lastname, b.starting_date, b.ending_date, m.content, b.validation FROM booking b JOIN contact c ON c.id = b.id_contact JOIN message m ON b.id = m.id_booking WHERE validation = 0').then(res => {
+      console.log(res)
+      return res
+    });
   }
 
   static async createBooking (newBooking, contactId) {
