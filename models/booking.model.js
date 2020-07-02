@@ -15,6 +15,15 @@ class Booking {
       });
   }
 
+  static async createBookingBack (newBooking) {
+    const fullBooking = { ...newBooking, validation: 1 };
+    return db.query('INSERT INTO booking SET ?', fullBooking)
+      .then(res => {
+        newBooking.id = res.insertId;
+        return newBooking;
+      });
+  }
+
   static async updateOne (bookingDetails) {
     return db.query('UPDATE booking SET validation = 1 WHERE id = ?', [bookingDetails.id])
       .then(row => db.query(`SELECT * FROM booking WHERE id = ${bookingDetails.id}`));

@@ -23,6 +23,18 @@ class BookingController {
       });
     }
   }
+
+  static async create (req, res) {
+    try {
+      console.log(req.body)
+      const newBooking = await Booking.createBookingBack(req.body);
+      res.status(201).send(newBooking);
+    } catch (err) {
+      res.status(500).send({
+        errorMessage: err.message || 'Some error occurred while creating the booking.'
+      });
+    }
+  }
 }
 
 module.exports = BookingController;
