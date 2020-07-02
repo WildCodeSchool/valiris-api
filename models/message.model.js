@@ -21,7 +21,7 @@ class Message {
       .then(res => {
         newMessage.id = res.insertId;
         newMessage.id_contact = newContactId;
-        newMessage.id_booking = newBookingId
+        newMessage.id_booking = newBookingId;
         return newMessage;
       });
   }
