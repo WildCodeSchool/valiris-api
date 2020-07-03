@@ -15,9 +15,21 @@ class Booking {
       });
   }
 
-  static async updateOne (bookingDetails) {
+  static async validateOne (bookingDetails) {
     return db.query('UPDATE booking SET validation = 1 WHERE id = ?', [bookingDetails.id])
       .then(row => db.query(`SELECT * FROM booking WHERE id = ${bookingDetails.id}`));
+  }
+
+  static async remove (id) {
+    return db.query('DELETE FROM booking WHERE id = ?', [id]).then(res => {
+      if (res.affectedRows !== 0) {
+        return Promise.resolve();
+      } else {
+        const err = new Error();
+        err.kind = 'not_found';
+        return Promise.reject(err);
+      }
+    });
   }
 }
 
