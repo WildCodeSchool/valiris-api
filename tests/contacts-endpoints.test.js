@@ -2,7 +2,7 @@ const request = require('supertest');
 const app = require('../server.js');
 const _ = require('lodash');
 
-describe('form endpoints', () => {
+describe('contact endpoints', () => {
   describe('POST /contacts', () => {
     describe('when the payload is valid', () => {
       it('returns 201 status code and the updated object when everything is provided', async () => {
@@ -11,12 +11,10 @@ describe('form endpoints', () => {
           firstname: 'Lancelot',
           email: 'lens78@gmail.com',
           phone: '600000000',
-          content: 'hello world',
-          id_contact: 24,
-          id_booking: 10,
-          id_apartment: '3',
-          starting_date: '2020-07-03',
-          ending_date: '2020-07-17'
+          message: 'hello world',
+          apartment: '3',
+          startDate: '2020-07-03',
+          endDate: '2020-07-17'
         };
         return request(app).post('/contacts').send(validContact).expect(201).then(res => {
           expect(_.isPlainObject(res.body));

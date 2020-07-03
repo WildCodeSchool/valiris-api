@@ -19,7 +19,7 @@ class ApartmentController {
     try {
       const data = await Apartment.getAll(req.currentLanguage);
       res.status(200).send(data.map(data => (
-        { ...data, mainPictureUrl: data.main_picture_url ? (req.headers.host + '/' + data.main_picture_url) : undefined }
+        { ...data, mainPictureUrl: data.mainPictureUrl ? (req.headers.host + '/' + data.mainPictureUrl) : undefined }
       )));
     } catch (err) {
       res.status(500).send({
@@ -45,8 +45,6 @@ class ApartmentController {
   static async create (req, res) {
     try {
       const mainPictureUrl = req.file ? req.file.path : null;
-      console.log(req.file);
-      console.log(req.body);
       const data = await Apartment.createApartment({ ...req.body, main_picture_url: mainPictureUrl });
       res.status(201).send(data);
     } catch (err) {
