@@ -26,7 +26,7 @@ class BookingController {
 
   static async create (req, res) {
     try {
-      console.log(req.body)
+      console.log(req.body);
       const newBooking = await Booking.createBookingBack(req.body);
       res.status(201).send(newBooking);
     } catch (err) {
@@ -35,7 +35,7 @@ class BookingController {
       });
     }
   }
-        
+
   static async delete (req, res) {
     try {
       await Booking.remove(req.params.id);
