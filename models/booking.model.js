@@ -7,18 +7,14 @@ class Booking {
 
   static async findById (bookingId) {
     return db.query(`
-    SELECT 
-    apartment.name, 
-    booking.id, 
+    SELECT
+    id,
     DATE_FORMAT(starting_date, "%Y-%m-%d") as starting_date, 
-    DATE_FORMAT(booking.ending_date, "%Y-%m-%d") as ending_date, 
-    id_apartment, 
-    contact.firstname, 
-    contact.lastname,
-    booking.validation
-    FROM booking JOIN apartment ON apartment.id = booking.id_apartment 
-    JOIN contact ON contact.id = booking.id_contact
-    WHERE booking.id = ?
+    DATE_FORMAT(booking.ending_date, "%Y-%m-%d") as ending_date,
+    id_apartment,
+    id_contact,
+    validation
+    FROM booking WHERE id = ?
     `, [bookingId]).then(rows => rows[0]);
   }
 
@@ -56,6 +52,14 @@ class Booking {
         return Promise.reject(err);
       }
     });
+  }
+
+  static async updateById (id, booking) {
+    console.log(booking)
+    return db.query(
+      'UPDATE booking SET starting_date = ?, ending_date = ?, id_apartment = ?, id_contact = ?, validation = ? WHERE id = ?',
+      [booking.starting_date, booking.ending_date, booking.id_apartment, booking.id_contact, booking.validation, id])
+      .then(() => this.findById(id));
   }
 }
 

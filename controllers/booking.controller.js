@@ -66,6 +66,19 @@ class BookingController {
       }
     }
   }
+
+  static async update (req, res) {
+    try {
+      const data = await Booking.updateById(req.params.id, req.body);
+      res.status(200).send(data);
+    } catch (err) {
+      if (err.kind === 'not_found') {
+        res.status(404).send({ errorMessage: `Booking with id ${req.params.id} not found.` });
+      } else {
+        res.status(500).send({ errorMessage: 'Error updating booking with id ' + req.params.id });
+      }
+    }
+  }
 }
 
 module.exports = BookingController;
