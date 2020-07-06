@@ -34,7 +34,7 @@ class contactController {
     const newBooking = await Booking.createBooking(clientPayloadBooking, newContact.id);
     const newMessage = await Message.createMessage(clientPayloadMessage, newContact.id, newBooking.id);
     await Mailer.sendMail(req.body, req.currentLanguage);
-    console.log({ ...newContact, ...newMessage, ...newBooking })
+    console.log({ ...newContact, ...newMessage, ...newBooking });
     return res.status(201).send({ ...newContact, ...newMessage, ...newBooking });
   }
 
