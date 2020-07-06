@@ -116,9 +116,9 @@ class Apartment {
 
   static async updateById (updatedApartment, id) {
     return db.query('UPDATE apartment SET ? WHERE id = ?', [updatedApartment, id])
-    .then(res => {
-      return updatedApartment
-    })
+      .then(res => {
+        return updatedApartment;
+      });
   }
 
 /*   static async updateById (id, contact) {

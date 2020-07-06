@@ -61,7 +61,7 @@ class ApartmentController {
     }
     try {
       const mainPictureUrl = req.file ? req.file.path : null;
-      const data = await Apartment.updateById({...req.body, main_picture_url: mainPictureUrl}, req.params.id);
+      const data = await Apartment.updateById({ ...req.body, main_picture_url: mainPictureUrl }, req.params.id);
       res.status(200).send(data);
     } catch (err) {
       if (err.kind === 'not_found') {
