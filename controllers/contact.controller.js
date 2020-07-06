@@ -5,7 +5,6 @@ const Booking = require('../models/booking.model.js');
 
 class contactController {
   static async createForm (req, res) {
-    console.log('coucou');
     try {
       const clientPayloadContact = { firstname: req.body.firstname, lastname: req.body.lastname, phone: req.body.phone, email: req.body.email };
       const clientPayloadMessage = { content: req.body.message };
@@ -14,12 +13,10 @@ class contactController {
       const errorContact = Contact.validate(clientPayloadContact).error;
       const errorMessage = Message.validate(clientPayloadMessage).error;
       if (errorContact) {
-        console.log(JSON.stringify(errorContact));
         return res.status(422).send({ errorMessage: errorContact.message, errorDetails: errorContact.details });
       }
 
       if (errorMessage) {
-        console.log(JSON.stringify(errorMessage));
         return res.status(422).send({ errorMessage: errorMessage.message, errorDetails: errorMessage.details });
       }
 
@@ -36,7 +33,6 @@ class contactController {
       const newBooking = await Booking.createBooking(clientPayloadBooking, newContact.id);
       const newMessage = await Message.createMessage(clientPayloadMessage, newContact.id, newBooking.id);
       await Mailer.sendMail(req.body, req.currentLanguage);
-      console.log({ ...newContact, ...newMessage, ...newBooking });
       return res.status(201).send({ ...newContact, ...newMessage, ...newBooking });
     } catch (err) {
       console.error(err);

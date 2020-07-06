@@ -92,7 +92,6 @@ class Apartment {
       sp.url
       FROM apartment a LEFT JOIN secondary_picture sp ON a.id = sp.id_apartment WHERE a.id = ?`, [id])
       .then(rows => {
-        console.log(rows);
         if (rows.length) {
           const tabUrl = [];
           rows.forEach(r => {
