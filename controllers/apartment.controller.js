@@ -4,7 +4,7 @@ class ApartmentController {
   static async findOne (req, res) {
     try {
       const data = await Apartment.findById(req.params.id, req.currentLanguage);
-      res.send(data);
+      res.status(200).send(data);
     } catch (err) {
       if (err.kind === 'not_found') {
         res.status(404).send({ errorMessage: `Apartment with id ${req.params.id} not found.` });
@@ -45,8 +45,6 @@ class ApartmentController {
   static async create (req, res) {
     try {
       const mainPictureUrl = req.file ? req.file.path : null;
-      console.log(req.file);
-      console.log(req.body);
       const data = await Apartment.createApartment({ ...req.body, main_picture_url: mainPictureUrl });
       res.status(201).send(data);
     } catch (err) {
