@@ -45,13 +45,47 @@ class ApartmentController {
   static async create (req, res) {
     try {
       const mainPictureUrl = req.file ? req.file.path : null;
-      const data = await Apartment.createApartment({ ...req.body, main_picture_url: mainPictureUrl });
+      const data = await Apartment.create({ ...req.body, main_picture_url: mainPictureUrl });
       res.status(201).send(data);
     } catch (err) {
       console.error(err);
       res.status(500).send({
         errorMessage: err.message || `Some error occurred while trying to create apartment ${req.body.id}.`
       });
+    }
+  }
+
+  static async update (req, res) {
+    if (!req.body) {
+      res.status(400).send({ errorMessage: 'Content can not be empty!' });
+    }
+    try {
+      const mainPictureUrl = req.file ? req.file.path : null;
+      const data = await Apartment.updateById({ ...req.body, main_picture_url: mainPictureUrl }, req.params.id);
+      res.status(200).send(data);
+    } catch (err) {
+      if (err.kind === 'not_found') {
+        res.status(404).send({ errorMessage: `Apartment with id ${req.params.id} not found.` });
+      } else {
+        res.status(500).send({ errorMessage: 'Error updating apartment with id ' + req.params.id });
+      }
+    }
+  }
+
+  static async delete (req, res) {
+    try {
+      await Apartment.remove(req.params.id);
+      res.send({ message: 'Apartment was deleted successfully!' });
+    } catch (err) {
+      if (err.kind === 'not_found') {
+        res.status(404).send({
+          message: `Not found contact with id ${req.params.id}.`
+        });
+      } else {
+        res.status(500).send({
+          message: 'Could not delete contact with id ' + req.params.id + err
+        });
+      }
     }
   }
 }

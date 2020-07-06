@@ -9,5 +9,7 @@ router.get('/availabilities/all', availabilitiesController.findAll);
 router.get('/:id/availabilities', availabilitiesController.findAllById);
 router.get('/', apartmentsController.findAll);
 router.post('/', handleImageUpload, apartmentsController.create);
+router.patch('/:id', handleImageUpload, apartmentsController.update);
+router.delete('/:id', apartmentsController.delete);
 
 module.exports = router;

@@ -106,11 +106,31 @@ class Apartment {
       });
   }
 
-  static async createApartment (newApartment) {
+  static async create (newApartment) {
     return db.query('INSERT INTO apartment SET ?', [newApartment])
       .then(res => {
         newApartment.id = res.insertId;
         return newApartment;
+      });
+  }
+
+  static async updateById (updatedApartment, id) {
+    return db.query('UPDATE apartment SET ? WHERE id = ?', [updatedApartment, id])
+      .then(() => {
+        return updatedApartment;
+      });
+  }
+
+  static async remove (id) {
+    return db.query('DELETE FROM apartment WHERE id = ?', [id])
+      .then(res => {
+        if (res.affectedRows !== 0) {
+          return Promise.resolve();
+        } else {
+          const err = new Error();
+          err.kind = 'not_found';
+          return Promise.reject(err);
+        }
       });
   }
 }
