@@ -19,7 +19,7 @@ class Booking {
     FROM booking JOIN apartment ON apartment.id = booking.id_apartment 
     JOIN contact ON contact.id = booking.id_contact
     WHERE booking.id = ?
-    `, [bookingId] ).then(rows => rows[0])
+    `, [bookingId]).then(rows => rows[0]);
   }
 
   static async createBooking (newBooking, contactId) {
