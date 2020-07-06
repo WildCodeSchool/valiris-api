@@ -56,7 +56,7 @@ class contactController {
         res.status(400).send({ errorMessage: 'Email already extist' });
       } else {
         const newContact = await Contact.createContact(req.body);
-        res.status(200).send(newContact);
+        res.status(201).send(newContact);
       }
     } catch (err) {
       res.status(500).send({
