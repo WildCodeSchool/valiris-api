@@ -55,7 +55,7 @@ class Booking {
   }
 
   static async updateById (id, booking) {
-    console.log(booking)
+    console.log(booking);
     return db.query(
       'UPDATE booking SET starting_date = ?, ending_date = ?, id_apartment = ?, id_contact = ?, validation = ? WHERE id = ?',
       [booking.starting_date, booking.ending_date, booking.id_apartment, booking.id_contact, booking.validation, id])
