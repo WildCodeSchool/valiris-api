@@ -12,6 +12,20 @@ class BookingController {
     }
   }
 
+  static async findOne (req, res) {
+    try {
+      const data = await Booking.findById(req.params.id);
+      res.send(data);
+    } catch (err) {
+      if (err.kind === 'not_found') {
+        res.status(404).send({ errorMessage: `Apartment with id ${req.params.id} not found.` });
+      } else {
+        console.log(err);
+        res.status(500).send({ errorMessage: 'Error retrieving Apartment with id ' + req.params.id });
+      }
+    }
+  }
+
   static async validateOne (req, res) {
     try {
       const data = await Booking.validateOne(req.body);
@@ -26,7 +40,7 @@ class BookingController {
 
   static async create (req, res) {
     try {
-      console.log(req.body)
+      console.log(req.body);
       const newBooking = await Booking.createBookingBack(req.body);
       res.status(201).send(newBooking);
     } catch (err) {
@@ -35,7 +49,7 @@ class BookingController {
       });
     }
   }
-  
+
   static async delete (req, res) {
     try {
       await Booking.remove(req.params.id);

@@ -15,10 +15,12 @@ class Availabilities {
     DATE_FORMAT(booking.ending_date, "%Y-%m-%d") as ending_date, 
     id_apartment, 
     contact.firstname, 
-    contact.lastname 
+    contact.lastname,
+    booking.validation
     FROM booking JOIN apartment ON apartment.id = booking.id_apartment 
-    JOIN contact ON contact.id = booking.id_contact`)
-    .then(rows => rows || null );
+    JOIN contact ON contact.id = booking.id_contact
+    ORDER BY starting_date DESC`)
+      .then(rows => rows || null);
   }
 }
 

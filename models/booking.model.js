@@ -5,6 +5,23 @@ class Booking {
     return db.query('SELECT DISTINCT b.id, c.firstname, c.lastname, b.starting_date, b.ending_date, m.content, b.validation FROM booking b LEFT JOIN contact c ON c.id = b.id_contact LEFT JOIN message m ON b.id = m.id_booking WHERE validation = 0');
   }
 
+  static async findById (bookingId) {
+    return db.query(`
+    SELECT 
+    apartment.name, 
+    booking.id, 
+    DATE_FORMAT(starting_date, "%Y-%m-%d") as starting_date, 
+    DATE_FORMAT(booking.ending_date, "%Y-%m-%d") as ending_date, 
+    id_apartment, 
+    contact.firstname, 
+    contact.lastname,
+    booking.validation
+    FROM booking JOIN apartment ON apartment.id = booking.id_apartment 
+    JOIN contact ON contact.id = booking.id_contact
+    WHERE booking.id = ?
+    `, [bookingId] ).then(rows => rows[0])
+  }
+
   static async createBooking (newBooking, contactId) {
     const fullBooking = { ...newBooking, id_contact: contactId, validation: 0 };
     return db.query('INSERT INTO booking SET ?', fullBooking)
