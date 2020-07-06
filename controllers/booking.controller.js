@@ -12,6 +12,31 @@ class BookingController {
     }
   }
 
+  static async findOne (req, res) {
+    try {
+      const data = await Booking.getOne(req.params.id);
+      res.status(200).send(data);
+    } catch (err) {
+      if (err.kind === 'not_found') {
+        res.status(404).send({ errorMessage: `Booking with id ${req.params.id} not found.` });
+      } else {
+        console.log(err);
+        res.status(500).send({ errorMessage: 'Error retrieving contact with id ' + req.params.id });
+      }
+    }
+  }
+
+  static async findAllInfos (req, res) {
+    try {
+      const data = await Booking.getAllInfos();
+      res.status(200).send(data);
+    } catch (err) {
+      res.status(500).send({
+        errorMessage: err.message || 'Some error occurred while retrieving information requests.'
+      });
+    }
+  }
+
   static async validateOne (req, res) {
     try {
       const data = await Booking.validateOne(req.body);
@@ -21,6 +46,23 @@ class BookingController {
       res.status(500).send({
         errorMessage: 'An error happened while you tried to validate a booking.'
       });
+    }
+  }
+
+  static async updateOne (req, res) {
+    if (!req.body) {
+      res.status(400).send({ errorMessage: 'Content can not be empty!' });
+    }
+    try {
+      const data = await Booking.updateById(req.params.id, req.body);
+      res.status(200).send(data);
+    } catch (err) {
+      if (err.kind === 'not_found') {
+        res.status(404).send({ errorMessage: `Booking with id ${req.params.id} not found.` });
+      } else {
+        console.log(err);
+        res.status(500).send({ errorMessage: 'Error updating booking with id ' + req.params.id });
+      }
     }
   }
 
