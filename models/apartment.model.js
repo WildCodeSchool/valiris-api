@@ -113,6 +113,20 @@ class Apartment {
         return newApartment;
       });
   }
+
+  static async updateById (updatedApartment, id) {
+    return db.query('UPDATE apartment SET ? WHERE id = ?', [updatedApartment, id])
+    .then(res => {
+      return updatedApartment
+    })
+  }
+
+/*   static async updateById (id, contact) {
+    return db.query(
+      'UPDATE contact SET lastname = ?, firstname = ?, phone = ?, email = ? WHERE id = ?',
+      [contact.lastname, contact.firstname, contact.phone, contact.email, id]
+    ).then(() => this.findById(id));
+  } */
 }
 
 module.exports = Apartment;

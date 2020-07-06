@@ -54,6 +54,23 @@ class ApartmentController {
       });
     }
   }
+
+  static async update (req, res) {
+    if (!req.body) {
+      res.status(400).send({ errorMessage: 'Content can not be empty!' });
+    }
+    try {
+      const mainPictureUrl = req.file ? req.file.path : null;
+      const data = await Apartment.updateById({...req.body, main_picture_url: mainPictureUrl}, req.params.id);
+      res.status(200).send(data);
+    } catch (err) {
+      if (err.kind === 'not_found') {
+        res.status(404).send({ errorMessage: `Apartment with id ${req.params.id} not found.` });
+      } else {
+        res.status(500).send({ errorMessage: 'Error updating apartment with id ' + req.params.id });
+      }
+    }
+  }
 }
 
 module.exports = ApartmentController;

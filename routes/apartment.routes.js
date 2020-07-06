@@ -8,5 +8,6 @@ router.get('/:id/back', apartmentsController.findOneBack);
 router.get('/:id/availabilities', availabilitiesController.findAll);
 router.get('/', apartmentsController.findAll);
 router.post('/', handleImageUpload, apartmentsController.create);
+router.patch('/:id', handleImageUpload, apartmentsController.update)
 
 module.exports = router;
