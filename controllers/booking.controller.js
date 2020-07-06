@@ -12,6 +12,20 @@ class BookingController {
     }
   }
 
+  static async findOne (req, res) {
+    try {
+      const data = await Booking.findById(req.params.id);
+      res.send(data);
+    } catch (err) {
+      if (err.kind === 'not_found') {
+        res.status(404).send({ errorMessage: `Apartment with id ${req.params.id} not found.` });
+      } else {
+        console.log(err);
+        res.status(500).send({ errorMessage: 'Error retrieving Apartment with id ' + req.params.id });
+      }
+    }
+  }
+
   static async validateOne (req, res) {
     try {
       const data = await Booking.validateOne(req.body);
@@ -49,6 +63,19 @@ class BookingController {
         res.status(500).send({
           message: 'Could not delete booking with id ' + req.params.id + err
         });
+      }
+    }
+  }
+
+  static async update (req, res) {
+    try {
+      const data = await Booking.updateById(req.params.id, req.body);
+      res.status(200).send(data);
+    } catch (err) {
+      if (err.kind === 'not_found') {
+        res.status(404).send({ errorMessage: `Booking with id ${req.params.id} not found.` });
+      } else {
+        res.status(500).send({ errorMessage: 'Error updating booking with id ' + req.params.id });
       }
     }
   }

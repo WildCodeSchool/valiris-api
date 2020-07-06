@@ -5,6 +5,19 @@ class Booking {
     return db.query('SELECT DISTINCT b.id, c.firstname, c.lastname, b.starting_date, b.ending_date, m.content, b.validation FROM booking b LEFT JOIN contact c ON c.id = b.id_contact LEFT JOIN message m ON b.id = m.id_booking WHERE validation = 0');
   }
 
+  static async findById (bookingId) {
+    return db.query(`
+    SELECT
+    id,
+    DATE_FORMAT(starting_date, "%Y-%m-%d") as starting_date, 
+    DATE_FORMAT(booking.ending_date, "%Y-%m-%d") as ending_date,
+    id_apartment,
+    id_contact,
+    validation
+    FROM booking WHERE id = ?
+    `, [bookingId]).then(rows => rows[0]);
+  }
+
   static async createBooking (newBooking, contactId) {
     const fullBooking = { ...newBooking, id_contact: contactId, validation: 0 };
     return db.query('INSERT INTO booking SET ?', fullBooking)
@@ -39,6 +52,14 @@ class Booking {
         return Promise.reject(err);
       }
     });
+  }
+
+  static async updateById (id, booking) {
+    console.log(booking);
+    return db.query(
+      'UPDATE booking SET starting_date = ?, ending_date = ?, id_apartment = ?, id_contact = ?, validation = ? WHERE id = ?',
+      [booking.starting_date, booking.ending_date, booking.id_apartment, booking.id_contact, booking.validation, id])
+      .then(() => this.findById(id));
   }
 }
 
