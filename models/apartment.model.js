@@ -32,13 +32,13 @@ class Apartment {
       FROM apartment a LEFT JOIN secondary_picture sp ON a.id = sp.id_apartment 
       WHERE a.id = ?`, [parseInt(id, 10)])
       .then(rows => {
-        if (rows) {
+        if (rows.length) {
           const tabUrl = [];
           rows.forEach(r => {
-            tabUrl.push(r.url);
+            if (r.url) tabUrl.push(r.url);
           });
           const a = rows[0];
-          return {
+          return Promise.resolve({
             id: a.id,
             name: a.name,
             details: a[detailsLang],
@@ -47,9 +47,11 @@ class Apartment {
             monthPrice: a.month_price,
             mainPictureUrl: a.main_picture_url,
             url: tabUrl
-          };
+          });
         } else {
-          return null;
+          const err = new Error();
+          err.kind = 'not_found';
+          return Promise.reject(err);
         }
       });
   }
@@ -71,6 +73,44 @@ class Apartment {
             mainPictureUrl: r.main_picture_url
           };
         });
+      });
+  }
+
+  static async getOneBack (id) {
+    return db.query(`
+      SELECT 
+      a.id, 
+      a.name, 
+      a.details_fr,
+      a.details_en,
+      a.week_price, 
+      a.month_price, 
+      a.title_fr,
+      a.title_en,
+      a.main_picture_url, 
+      sp.id , 
+      sp.url
+      FROM apartment a LEFT JOIN secondary_picture sp ON a.id = sp.id_apartment WHERE a.id = ?`, [id])
+      .then(rows => {
+        if (rows.length) {
+          const tabUrl = [];
+          rows.forEach(r => {
+            if (r.url) tabUrl.push(r.url);
+          });
+          return Promise.resolve({ ...rows[0], url: tabUrl });
+        } else {
+          const err = new Error();
+          err.kind = 'not_found';
+          return Promise.reject(err);
+        }
+      });
+  }
+
+  static async createApartment (newApartment) {
+    return db.query('INSERT INTO apartment SET ?', [newApartment])
+      .then(res => {
+        newApartment.id = res.insertId;
+        return newApartment;
       });
   }
 }
