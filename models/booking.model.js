@@ -9,49 +9,6 @@ class Booking {
     return db.query('SELECT DISTINCT b.id, c.firstname, c.lastname, c.phone, c.email, m.content, b.validation FROM booking b LEFT JOIN contact c ON c.id = b.id_contact LEFT JOIN message m ON b.id = m.id_booking WHERE b.starting_date IS NULL');
   }
 
-  // static async getOne (id) {
-  //   return db.query(
-  //     `SELECT DISTINCT
-  //     b.id,
-  //     c.firstname,
-  //     c.lastname,
-  //     c.phone,
-  //     c.email,
-  //     b.starting_date,
-  //     b.ending_date,
-  //     m.content,
-  //     b.validation,
-  //     b.id_apartment,
-  //     b.id_contact
-  //     FROM booking b
-  //     LEFT JOIN contact c
-  //     ON c.id = b.id_contact
-  //     LEFT JOIN message m
-  //     ON b.id = m.id_booking
-  //     WHERE b.id = ?`, [parseInt(id, 10)])
-  //     .then(rows => {
-  //       if (rows.length) {
-  //         const c = rows[0];
-  //         return Promise.resolve({
-  //           id: c.id,
-  //           firstname: c.firstname,
-  //           lastname: c.lastname,
-  //           phone: c.phone,
-  //           email: c.email,
-  //           starting_date: c.starting_date,
-  //           ending_date: c.ending_date,
-  //           message: c.content,
-  //           validation: c.validation,
-  //           id_apartment: c.id_apartment
-  //         });
-  //       } else {
-  //         const err = new Error();
-  //         err.kind = 'not_found';
-  //         return Promise.reject(err);
-  //       }
-  //     });
-  // }
-
   static async findById (bookingId) {
     return db.query(`
     SELECT
