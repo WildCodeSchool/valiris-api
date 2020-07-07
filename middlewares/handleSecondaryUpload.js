@@ -1,3 +1,28 @@
+/* const util = require("util");
+const path = require("path");
+const multer = require("multer");
+
+let storage = multer.diskStorage({
+  destination: (req, file, callback) => {
+    callback(null, path.join(`${__dirname}/../../upload`));
+  },
+  filename: (req, file, callback) => {
+    const match = ["image/png", "image/jpeg"];
+
+    if (match.indexOf(file.mimetype) === -1) {
+      const message = `${file.originalname} is invalid. Only accept png/jpeg.`;
+      return callback(message, null);
+    }
+
+    let filename = `${Date.now()}-${file.originalname}`;
+    callback(null, filename);
+  }
+});
+
+let uploadFiles = multer({ storage: storage }).array("pictures", 10);
+let uploadFilesMiddleware = util.promisify(uploadFiles);
+module.exports = uploadFilesMiddleware; */
+
 const multer = require('multer');
 const path = require('path');
 
@@ -23,6 +48,6 @@ const fileFilter = (req, file, cb) => {
   cb(err);
 };
 
-const upload = multer({ storage, fileFilter }).any('url');
+const upload = multer({ storage, fileFilter }).array('pictures', 10);
 
 module.exports = upload;

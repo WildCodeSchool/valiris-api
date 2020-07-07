@@ -1,4 +1,5 @@
 const Apartment = require('../models/apartment.model.js');
+/* const multipleUpload = require('../middlewares/handleSecondaryUpload.js'); */
 
 class ApartmentController {
   static async findOne (req, res) {
@@ -42,11 +43,19 @@ class ApartmentController {
     }
   }
 
-  static async create (req, res) {
+  static async createApartment (req, res) {
     try {
-      const mainPictureUrl = req.file ? req.file.path : null;
-      const data = await Apartment.create({ ...req.body, main_picture_url: mainPictureUrl });
-      res.status(201).send(data);
+      // await multipleUpload(req, res);
+      const mainPictureUrl = req.files ? req.files[0] : null;
+      console.log(req.files);
+      const appartmentPayload = { name: req.body.name, details_fr: req.body.details_fr, details_en: req.body.details_en, title_fr: req.body.title_fr, title_en: req.body.title_en, week_price: req.body.week_price, month_price: req.body.month_price };
+      const newApartment = await Apartment.create({ ...appartmentPayload, main_picture_url: mainPictureUrl });
+      const secondaryPicture = req.files.slice(1);
+
+      secondaryPicture.map(async (file) => {
+        const newSecondaryPictures = await Apartment.createSecondaryPictures(file, newApartment.id);
+      });
+      res.status(201).send(newApartment);
     } catch (err) {
       console.error(err);
       res.status(500).send({
@@ -54,6 +63,22 @@ class ApartmentController {
       });
     }
   }
+
+  /*   static async createSecondaryPictures (req, res) {
+    try {
+      await multipleUpload(req, res);
+      console.log(req.files);
+      if (req.files.length <= 0) {
+        return res.send(`You must select at least 1 file.`);
+      }
+      const data = await Apartment.createSecondaryPictures(req.files, req.body.id)
+    } catch(error) {
+      if (error.code === "LIMIT_UNEXPECTED_FILE") {
+        return res.send("Too many files to upload.");
+      }
+      return res.send(`Error when trying upload many files: ${error}`);
+    }
+  } */
 
   static async update (req, res) {
     if (!req.body) {

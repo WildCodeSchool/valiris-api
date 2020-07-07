@@ -114,6 +114,14 @@ class Apartment {
       });
   }
 
+  static async createSecondaryPictures (newSecondaryPicture, newAppartmentId) {
+    return db.query('INSERT INTO secondary_picture SET ?', [newSecondaryPicture, newAppartmentId])
+      .then(res => {
+        newSecondaryPicture.id = res.insertId;
+        return newSecondaryPicture;
+      });
+  }
+
   static async updateById (updatedApartment, id) {
     return db.query('UPDATE apartment SET ? WHERE id = ?', [updatedApartment, id])
       .then(() => {
