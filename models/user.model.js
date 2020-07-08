@@ -47,7 +47,7 @@ class User {
     }
   }
 
-  static async updateById (id, name, email ,password) {
+  static async updateById (id, name, email, password) {
     const hash = await argon2.hash(password);
     return db.query(
       'UPDATE users SET name = ?, email = ?, encrypted_password = ? WHERE id = ?',
