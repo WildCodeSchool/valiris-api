@@ -46,6 +46,14 @@ class User {
       }
     }
   }
+
+  static async updateById (id, name, email ,password) {
+    const hash = await argon2.hash(password);
+    return db.query(
+      'UPDATE users SET name = ?, email = ?, encrypted_password = ? WHERE id = ?',
+      [name, email, hash, id]
+    ).then(() => this.findById(id));
+  }
 }
 
 module.exports = User;
