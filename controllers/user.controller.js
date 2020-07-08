@@ -10,6 +10,10 @@ class usersController {
     if (!isNotEmptyStirng(clientPayload.name) || !isNotEmptyStirng(clientPayload.email) || !isNotEmptyStirng(clientPayload.password)) {
       return res.status(422).send({ errorMessage: 'a required attribute is missing' });
     }
+    const error = User.validate(clientPayload).error;
+    if (error) {
+      return res.status(422).send({ error: error.message });
+    }
 
     const createdUser = await User.create(clientPayload.name, clientPayload.email, clientPayload.password);
     res.status(201).send(createdUser);

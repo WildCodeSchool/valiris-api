@@ -1,10 +1,20 @@
 const db = require('../db.js');
 const argon2 = require('argon2');
 const jwt = require('jsonwebtoken');
+const Joi = require('@hapi/joi');
 
 const JWT_PRIVATE_KEY = process.env.JWT_PRIVATE_KEY;
 
 class User {
+  static validate (attributes) {
+    const schema = Joi.object({
+      name: Joi.string().min(1).max(40).required(),
+      email: Joi.string().email().required().pattern(new RegExp(/[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,3}/)),
+      password: Joi.string().min(5).max(30)
+    });
+    return schema.validate(attributes);
+  }
+  
   static async create (name, email, password) {
     const hash = await argon2.hash(password);
     return db.query('insert into users (name, email, encrypted_password) values (?, ?, ?)', [name, email, hash])
