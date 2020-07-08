@@ -88,16 +88,16 @@ class Apartment {
       a.title_fr,
       a.title_en,
       a.main_picture_url, 
-      sp.id , 
+      sp.id, 
       sp.url
       FROM apartment a LEFT JOIN secondary_picture sp ON a.id = sp.id_apartment WHERE a.id = ?`, [id])
       .then(rows => {
         if (rows.length) {
           const tabUrl = [];
           rows.forEach(r => {
-            if (r.url) tabUrl.push(r.url);
+            if (r.url) tabUrl.push({ url: r.url, id: r.id });
           });
-          return Promise.resolve({ ...rows[0], url: tabUrl });
+          return Promise.resolve({ ...rows[0], urlSecondaryPictures: tabUrl });
         } else {
           const err = new Error();
           err.kind = 'not_found';
@@ -114,8 +114,8 @@ class Apartment {
       });
   }
 
-  static async createSecondaryPictures (newSecondaryPicture, newAppartmentId) {
-    return db.query('INSERT INTO secondary_picture SET ?', [newSecondaryPicture, newAppartmentId])
+  static async createSecondaryPictures (newSecondaryPicture) {
+    return db.query('INSERT INTO secondary_picture SET ?', [newSecondaryPicture])
       .then(res => {
         newSecondaryPicture.id = res.insertId;
         return newSecondaryPicture;
@@ -126,6 +126,13 @@ class Apartment {
     return db.query('UPDATE apartment SET ? WHERE id = ?', [updatedApartment, id])
       .then(() => {
         return updatedApartment;
+      });
+  }
+
+  static async updateSecondaryPictures (newSecondaryPicture, id) {
+    return db.query('UPDATE secondary_picture SET ? WHERE id = ?', [newSecondaryPicture, id])
+      .then(() => {
+        return updatedSecondaryPicture;
       });
   }
 
