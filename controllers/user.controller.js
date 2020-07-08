@@ -18,6 +18,20 @@ class usersController {
     const createdUser = await User.create(clientPayload.name, clientPayload.email, clientPayload.password);
     res.status(201).send(createdUser);
   }
+
+  static async findOne (req, res) {
+    try {
+      const data = await User.findById(req.params.id);
+      res.status(200).send(data);
+    } catch (err) {
+      if (err.kind === 'not_found') {
+        res.status(404).send({ errorMessage: `User with id ${req.params.id} not found.` });
+      } else {
+        console.log(err);
+        res.status(500).send({ errorMessage: 'Error retrieving user account details with id ' + req.params.id });
+      }
+    }
+  }
 }
 
 module.exports = usersController;

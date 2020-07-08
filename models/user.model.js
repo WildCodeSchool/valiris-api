@@ -14,7 +14,7 @@ class User {
     });
     return schema.validate(attributes);
   }
-  
+
   static async create (name, email, password) {
     const hash = await argon2.hash(password);
     return db.query('insert into users (name, email, encrypted_password) values (?, ?, ?)', [name, email, hash])
