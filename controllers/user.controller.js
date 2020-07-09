@@ -38,7 +38,24 @@ class usersController {
       res.status(400).send({ errorMessage: 'Content can not be empty!' });
     }
     try {
-      const data = await User.updateById(req.params.id, req.body.name, req.body.email, req.body.password);
+      const data = await User.updateById(req.params.id, req.body.name, req.body.email);
+      res.status(200).send(data);
+    } catch (err) {
+      if (err.kind === 'not_found') {
+        res.status(404).send({ errorMessage: `User with id ${req.params.id} not found.` });
+      } else {
+        console.log(err);
+        res.status(500).send({ errorMessage: 'Error updating user with id ' + req.params.id });
+      }
+    }
+  }
+
+  static async updatePassword (req, res) {
+    if (!req.body) {
+      res.status(400).send({ errorMessage: 'Content can not be empty!' });
+    }
+    try {
+      const data = await User.updatePasswordById(req.params.id, req.body.password);
       res.status(200).send(data);
     } catch (err) {
       if (err.kind === 'not_found') {
