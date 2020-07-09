@@ -10,6 +10,8 @@ router.get('/', apartmentsController.findAll);
 router.post('/', apartmentsController.create);
 router.post('/upload', handleImageUpload, apartmentsController.upload);
 router.patch('/:id', apartmentsController.update);
+router.patch('/:id/updateSecondary', apartmentsController.updateSecondary);
+router.post('/:id/updateNewSecondary', apartmentsController.updateNewSecondary);
 router.delete('/:id', apartmentsController.delete);
 
 module.exports = router;

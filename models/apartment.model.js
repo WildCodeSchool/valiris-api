@@ -78,7 +78,7 @@ class Apartment {
 
   static async getOneBack (id) {
     return db.query(`
-      SELECT 
+      SELECT  
       a.id, 
       a.name, 
       a.details_fr,
@@ -87,8 +87,8 @@ class Apartment {
       a.month_price, 
       a.title_fr,
       a.title_en,
-      a.main_picture_url, 
-      sp.id, 
+      a.main_picture_url,
+      sp.id,
       sp.url
       FROM apartment a LEFT JOIN secondary_picture sp ON a.id = sp.id_apartment WHERE a.id = ?`, [id])
       .then(rows => {
@@ -130,9 +130,9 @@ class Apartment {
   }
 
   static async updateSecondaryPictures (newSecondaryPicture, id) {
-    return db.query('UPDATE secondary_picture SET ? WHERE id = ?', [newSecondaryPicture, id])
+    return db.query('UPDATE secondary_picture SET url = ? WHERE id = ?', [newSecondaryPicture, id])
       .then(() => {
-        return updatedSecondaryPicture;
+        return newSecondaryPicture;
       });
   }
 

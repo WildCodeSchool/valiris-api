@@ -58,7 +58,7 @@ class ApartmentController {
       const newApartment = await Apartment.create(appartmentPayload);
 
       req.body.secondaryPictures.map(async (url) => {
-        const newSecondaryPictures = await Apartment.createSecondaryPictures({ url, id_apartment: newApartment.id });
+        await Apartment.createSecondaryPictures({ url, id_apartment: newApartment.id });
       });
       res.status(201).send(newApartment);
     } catch (err) {
@@ -74,11 +74,45 @@ class ApartmentController {
       res.status(400).send({ errorMessage: 'Content can not be empty!' });
     }
     try {
-      const mainPictureUrl = req.file ? req.file.path : null;
-      const data = await Apartment.updateById({ ...req.body, main_picture_url: mainPictureUrl }, req.params.id);
+      const apartmentPayload = { name: req.body.name, details_fr: req.body.details_fr, details_en: req.body.details_en, title_fr: req.body.title_fr, title_en: req.body.title_en, week_price: req.body.weekPrice, month_price: req.body.monthPrice, main_picture_url: req.body.mainPicture };
+      const data = await Apartment.updateById(apartmentPayload, req.params.id);
       res.status(200).send(data);
     } catch (err) {
+      console.error(err);
+      res.status(500).send({
+        errorMessage: err.message || `Some error occurred while trying to update apartment ${req.params.id}.`
+      });
+    }
+  }
 
+  static async updateNewSecondary (req, res) {
+    if (!req.body) {
+      res.status(400).send({ errorMessage: 'Content can not be empty!' });
+    }
+    try {
+      const data = await Apartment.createSecondaryPictures({ url: req.body.picture, id_apartment: req.params.id });
+      res.status(200).send(data);
+    } catch (err) {
+      console.error(err);
+      res.status(500).send({
+        errorMessage: err.message || `Some error occurred while trying to update apartment ${req.params.id}.`
+      });
+    }
+  }
+
+  static async updateSecondary (req, res) {
+    if (!req.body) {
+      res.status(400).send({ errorMessage: 'Content can not be empty!' });
+    }
+    try {
+      console.log(req.body.picture.url);
+      const data = await Apartment.updateSecondaryPictures(req.body.picture.url, req.body.picture.id);
+      res.status(200).send(data);
+    } catch (err) {
+      console.error(err);
+      res.status(500).send({
+        errorMessage: err.message || `Some error occurred while trying to update apartment ${req.params.id}.`
+      });
     }
   }
 
