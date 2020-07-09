@@ -47,11 +47,18 @@ class User {
     }
   }
 
-  static async updateById (id, name, email, password) {
+  static async updateById (id, name, email) {
+    return db.query(
+      'UPDATE users SET name = ?, email = ? WHERE id = ?',
+      [name, email, id]
+    ).then(() => this.findById(id));
+  }
+
+  static async updatePasswordById (id, password) {
     const hash = await argon2.hash(password);
     return db.query(
-      'UPDATE users SET name = ?, email = ?, encrypted_password = ? WHERE id = ?',
-      [name, email, hash, id]
+      'UPDATE users SET encrypted_password = ? WHERE id = ?',
+      [hash, id]
     ).then(() => this.findById(id));
   }
 }
