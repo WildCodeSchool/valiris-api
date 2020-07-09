@@ -44,7 +44,7 @@ class ApartmentController {
 
   static async upload (req, res) {
     try {
-      const currentPicture = req.file ? req.file.path : null;
+      const currentPicture = req.file ? req.file.path.replace('\\', '/') : null;
       res.status(200).send(currentPicture);
     } catch (err) {
       console.error(err);
