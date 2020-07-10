@@ -2,11 +2,10 @@ const db = require('../db.js');
 const Joi = require('@hapi/joi');
 
 class Booking {
-
   static validate (attributes) {
     const schema = Joi.object({
       starting_date: Joi.date().required(),
-      ending_date: Joi.date().required(),
+      ending_date: Joi.date().required()
     });
     return schema.validate(attributes);
   }

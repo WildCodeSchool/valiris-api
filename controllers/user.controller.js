@@ -1,7 +1,7 @@
 const User = require('../models/user.model.js');
 
 class usersController {
-  static async create(req, res) {
+  static async create (req, res) {
     const userExists = await User.userAlreadyExists(req.body.email);
     if (userExists) {
       res.status(400).send({ errorMessage: 'Email already used' });
@@ -30,7 +30,7 @@ class usersController {
     }
   }
 
-  static async findOne(req, res) {
+  static async findOne (req, res) {
     try {
       const data = await User.findById(req.params.id);
       res.status(200).send(data);
@@ -44,7 +44,7 @@ class usersController {
     }
   }
 
-  static async update(req, res) {
+  static async update (req, res) {
     const clientPayloadInfos = { name: req.body.name, email: req.body.email };
 
     const userExistsUpdate = await User.userAlreadyExistsUpdate(req.body.email);
@@ -69,11 +69,11 @@ class usersController {
             res.status(500).send({ errorMessage: 'Error updating user with id ' + req.params.id });
           }
         }
-      } 
-    } 
+      }
+    }
   }
 
-  static async updatePassword(req, res) {
+  static async updatePassword (req, res) {
     const clientPayloadPassword = { password: req.body.password };
     if (!req.body) {
       res.status(400).send({ errorMessage: 'Content can not be empty!' });

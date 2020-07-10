@@ -50,7 +50,7 @@ class BookingController {
   }
 
   static async create (req, res) {
-    const datePayload = { starting_date: req.body.starting_date, ending_date: req.body.ending_date }
+    const datePayload = { starting_date: req.body.starting_date, ending_date: req.body.ending_date };
     const errorDate = Booking.validate(datePayload).error;
     if (errorDate) {
       return res.status(422).send({ errorMessage: errorDate.message, errorDetails: errorDate.details });
