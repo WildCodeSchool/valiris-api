@@ -1,4 +1,5 @@
 const db = require('../db.js');
+const Joi = require('@hapi/joi');
 
 class Apartment {
   constructor (appartment) {
@@ -12,6 +13,20 @@ class Apartment {
     this.month_price = appartment.month_price;
     this.main_picture_url = appartment.main_picture_url;
     this.secondary_picture_url = appartment.secondary_picture_url;
+  }
+
+  static validate (attributes) {
+    const schema = Joi.object({
+      name: Joi.string().min(1).max(40).required(),
+      details_fr: Joi.string().min(10).required(),
+      details_en: Joi.string().min(10).required(),
+      title_fr: Joi.string().min(5).required(),
+      title_en: Joi.string().min(5).required(),
+      week_price: Joi.number().required(),
+      month_price: Joi.number().required(),
+      main_picture_url: Joi.required(),
+    });
+    return schema.validate(attributes);
   }
 
   static async findById (id, lang = 'fr') {

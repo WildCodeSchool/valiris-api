@@ -45,6 +45,24 @@ class ApartmentController {
   static async create (req, res) {
     try {
       const mainPictureUrl = req.file ? req.file.path : null;
+      const apartmentPayload = { 
+        name: req.body.name,
+        details_fr: req.body.details_fr,
+        details_en: req.body.details_en,
+        title_fr: req.body.title_fr,
+        title_en: req.body.title_en,
+        week_price: req.body.week_price,
+        month_price: req.body.month_price,
+        main_picture_url: mainPictureUrl
+      }
+
+      const errorApartment = Apartment.validate(apartmentPayload).error; 
+      if (errorApartment) {
+        console.log(errorApartment.message)
+        return res.status(422).send({ errorMessage: errorApartment.message, errorDetails: errorApartment.details });
+      }
+
+      console.log(req.body)
       const data = await Apartment.createApartment({ ...req.body, main_picture_url: mainPictureUrl });
       res.status(201).send(data);
     } catch (err) {
