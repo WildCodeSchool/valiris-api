@@ -95,7 +95,7 @@ class contactController {
       const error = Contact.validate(req.body).error;
       if (error) {
         return res.status(422).send({ errorMessage: error.message, errorDetails: error.details });
-      } 
+      }
       const contactExists = await Contact.contactAlreadyExists(req.body.email);
       if (contactExists) {
         return res.status(400).send({ errorMessage: 'Email already extist' });
