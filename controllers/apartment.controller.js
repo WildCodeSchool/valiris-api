@@ -60,8 +60,8 @@ class ApartmentController {
         details_en: req.body.details_en,
         title_fr: req.body.title_fr,
         title_en: req.body.title_en,
-        week_price: req.body.week_price,
-        month_price: req.body.month_price,
+        week_price: req.body.weekPrice,
+        month_price: req.body.monthPrice,
         main_picture_url: req.body.mainPicture
       };
 
@@ -71,9 +71,8 @@ class ApartmentController {
         return res.status(422).send({ errorMessage: errorApartment.message, errorDetails: errorApartment.details });
       }
 
-      console.log(req.body);
       const newApartment = await Apartment.create(apartmentPayload);
-      
+
       req.body.secondaryPictures.map(async (url) => {
         await Apartment.createSecondaryPictures({ url, id_apartment: newApartment.id });
       });
