@@ -13,7 +13,7 @@ router.patch('/:id/updateSecondary', apartmentsController.updateSecondary);
 router.post('/:id/updateNewSecondary', apartmentsController.updateNewSecondary);
 router.delete('/:id', apartmentsController.delete);
 
-router.get('/:id/availabilities', availabilitiesController.findAll);
+router.get('/:id/availabilities', availabilitiesController.findAllById);
 router.get('/availabilities/all', availabilitiesController.findAll);
 
 module.exports = router;
