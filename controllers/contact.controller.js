@@ -35,7 +35,9 @@ class contactController {
       await Mailer.sendMail(req.body, req.currentLanguage);
       return res.status(201).send({ ...newContact, ...newMessage, ...newBooking });
     } catch (err) {
-      console.error(err);
+      res.status(500).send({
+        errorMessage: err.message || 'Some error occurred while retrieving contacts.'
+      });
     }
   }
 
@@ -52,6 +54,10 @@ class contactController {
 
   static async createContact (req, res) {
     try {
+      const error = Contact.validate(req.body).error;
+      if (error) {
+        return res.status(422).send({ errorMessage: error.message, errorDetails: error.details });
+      }
       const contactExists = await Contact.contactAlreadyExists(req.body.email);
       if (contactExists) {
         res.status(400).send({ errorMessage: 'Email already extist' });
@@ -86,6 +92,14 @@ class contactController {
     }
 
     try {
+      const error = Contact.validate(req.body).error;
+      if (error) {
+        return res.status(422).send({ errorMessage: error.message, errorDetails: error.details });
+      } 
+      const contactExists = await Contact.contactAlreadyExists(req.body.email);
+      if (contactExists) {
+        return res.status(400).send({ errorMessage: 'Email already extist' });
+      }
       const data = await Contact.updateById(req.params.id, req.body);
       res.status(200).send(data);
     } catch (err) {
