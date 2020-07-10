@@ -1,6 +1,16 @@
 const db = require('../db.js');
+const Joi = require('@hapi/joi');
 
 class Booking {
+
+  static validate (attributes) {
+    const schema = Joi.object({
+      starting_date: Joi.date().required(),
+      ending_date: Joi.date().required(),
+    });
+    return schema.validate(attributes);
+  }
+
   static async getAll () {
     return db.query('SELECT DISTINCT b.id, c.firstname, c.lastname, c.phone, c.email, b.starting_date, b.ending_date, m.content, b.validation FROM booking b LEFT JOIN contact c ON c.id = b.id_contact LEFT JOIN message m ON b.id = m.id_booking WHERE validation = 0 AND starting_date IS NOT NULL AND ending_date IS NOT NULL');
   }
