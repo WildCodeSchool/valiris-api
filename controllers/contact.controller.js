@@ -21,12 +21,26 @@ class contactController {
       }
 
       const contactExists = await Contact.contactAlreadyExists(clientPayloadContact.email);
-      if (contactExists) {
+      if (contactExists && !req.body.apartment && !req.body.startDate && !req.body.endDate) {
+        const findExistcontact = await Contact.findByEmail(clientPayloadContact.email);
+        const newMessage = await Message.createMessage(clientPayloadMessage, findExistcontact.id);
+        await Mailer.sendMail(req.body, req.currentLanguage);
+        return res.status(201).send({ ...newMessage });
+      }
+
+      if (contactExists && req.body.apartment && req.body.startDate && req.body.endDate) {
         const findExistcontact = await Contact.findByEmail(clientPayloadContact.email);
         const newBooking = await Booking.createBooking(clientPayloadBooking, findExistcontact.id);
         const newMessage = await Message.createMessage(clientPayloadMessage, findExistcontact.id, newBooking.id);
         await Mailer.sendMail(req.body, req.currentLanguage);
         return res.status(201).send({ ...newMessage, ...newBooking });
+      }
+
+      if (!contactExists && !req.body.apartment && !req.body.startDate && !req.body.endDate) {
+        const newContact = await Contact.createContact(clientPayloadContact);
+        const newMessage = await Message.createMessage(clientPayloadMessage, newContact.id);
+        await Mailer.sendMail(req.body, req.currentLanguage);
+        return res.status(201).send({ ...newContact, ...newMessage });
       }
 
       const newContact = await Contact.createContact(clientPayloadContact);
