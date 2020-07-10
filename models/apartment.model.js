@@ -24,7 +24,7 @@ class Apartment {
       title_en: Joi.string().min(5).required(),
       week_price: Joi.number().required(),
       month_price: Joi.number().required(),
-      main_picture_url: Joi.required(),
+      main_picture_url: Joi.required()
     });
     return schema.validate(attributes);
   }
