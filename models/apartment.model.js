@@ -1,4 +1,5 @@
 const db = require('../db.js');
+const Joi = require('@hapi/joi');
 
 class Apartment {
   constructor (appartment) {
@@ -12,6 +13,20 @@ class Apartment {
     this.month_price = appartment.month_price;
     this.main_picture_url = appartment.main_picture_url;
     this.secondary_picture_url = appartment.secondary_picture_url;
+  }
+
+  static validate (attributes) {
+    const schema = Joi.object({
+      name: Joi.string().min(1).max(40).required(),
+      details_fr: Joi.string().min(10).required(),
+      details_en: Joi.string().min(10).required(),
+      title_fr: Joi.string().min(5).required(),
+      title_en: Joi.string().min(5).required(),
+      week_price: Joi.number().required(),
+      month_price: Joi.number().required(),
+      main_picture_url: Joi.required()
+    });
+    return schema.validate(attributes);
   }
 
   static async findById (id, lang = 'fr') {
@@ -78,7 +93,7 @@ class Apartment {
 
   static async getOneBack (id) {
     return db.query(`
-      SELECT 
+      SELECT  
       a.id, 
       a.name, 
       a.details_fr,
@@ -87,17 +102,17 @@ class Apartment {
       a.month_price, 
       a.title_fr,
       a.title_en,
-      a.main_picture_url, 
-      sp.id , 
+      a.main_picture_url,
+      sp.id,
       sp.url
       FROM apartment a LEFT JOIN secondary_picture sp ON a.id = sp.id_apartment WHERE a.id = ?`, [id])
       .then(rows => {
         if (rows.length) {
           const tabUrl = [];
           rows.forEach(r => {
-            if (r.url) tabUrl.push(r.url);
+            if (r.url) tabUrl.push({ url: r.url, id: r.id });
           });
-          return Promise.resolve({ ...rows[0], url: tabUrl });
+          return Promise.resolve({ ...rows[0], urlSecondaryPictures: tabUrl });
         } else {
           const err = new Error();
           err.kind = 'not_found';
@@ -106,11 +121,46 @@ class Apartment {
       });
   }
 
-  static async createApartment (newApartment) {
+  static async create (newApartment) {
     return db.query('INSERT INTO apartment SET ?', [newApartment])
       .then(res => {
         newApartment.id = res.insertId;
         return newApartment;
+      });
+  }
+
+  static async createSecondaryPictures (newSecondaryPicture) {
+    return db.query('INSERT INTO secondary_picture SET ?', [newSecondaryPicture])
+      .then(res => {
+        newSecondaryPicture.id = res.insertId;
+        return newSecondaryPicture;
+      });
+  }
+
+  static async updateById (updatedApartment, id) {
+    return db.query('UPDATE apartment SET ? WHERE id = ?', [updatedApartment, id])
+      .then(() => {
+        return updatedApartment;
+      });
+  }
+
+  static async updateSecondaryPictures (newSecondaryPicture, id) {
+    return db.query('UPDATE secondary_picture SET url = ? WHERE id = ?', [newSecondaryPicture, id])
+      .then(() => {
+        return newSecondaryPicture;
+      });
+  }
+
+  static async remove (id) {
+    return db.query('DELETE FROM apartment WHERE id = ?', [id])
+      .then(res => {
+        if (res.affectedRows !== 0) {
+          return Promise.resolve();
+        } else {
+          const err = new Error();
+          err.kind = 'not_found';
+          return Promise.reject(err);
+        }
       });
   }
 }
