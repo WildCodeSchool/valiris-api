@@ -72,7 +72,7 @@ class ApartmentController {
       }
 
       const newApartment = await Apartment.create(apartmentPayload);
-
+      
       req.body.secondaryPictures.map(async (url) => {
         await Apartment.createSecondaryPictures({ url, id_apartment: newApartment.id });
       });
