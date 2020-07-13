@@ -54,8 +54,24 @@ class ApartmentController {
 
   static async create (req, res) {
     try {
-      const appartmentPayload = { name: req.body.name, details_fr: req.body.details_fr, details_en: req.body.details_en, title_fr: req.body.title_fr, title_en: req.body.title_en, week_price: req.body.weekPrice, month_price: req.body.monthPrice, main_picture_url: req.body.mainPicture };
-      const newApartment = await Apartment.create(appartmentPayload);
+      const apartmentPayload = {
+        name: req.body.name,
+        details_fr: req.body.details_fr,
+        details_en: req.body.details_en,
+        title_fr: req.body.title_fr,
+        title_en: req.body.title_en,
+        week_price: req.body.weekPrice,
+        month_price: req.body.monthPrice,
+        main_picture_url: req.body.mainPicture
+      };
+
+      const errorApartment = Apartment.validate(apartmentPayload).error;
+      if (errorApartment) {
+        console.log(errorApartment.message);
+        return res.status(422).send({ errorMessage: errorApartment.message, errorDetails: errorApartment.details });
+      }
+
+      const newApartment = await Apartment.create(apartmentPayload);
 
       req.body.secondaryPictures.map(async (url) => {
         await Apartment.createSecondaryPictures({ url, id_apartment: newApartment.id });
@@ -75,6 +91,13 @@ class ApartmentController {
     }
     try {
       const apartmentPayload = { name: req.body.name, details_fr: req.body.details_fr, details_en: req.body.details_en, title_fr: req.body.title_fr, title_en: req.body.title_en, week_price: req.body.weekPrice, month_price: req.body.monthPrice, main_picture_url: req.body.mainPicture };
+
+      const errorApartment = Apartment.validate(apartmentPayload).error;
+      if (errorApartment) {
+        console.log(errorApartment.message);
+        return res.status(422).send({ errorMessage: errorApartment.message, errorDetails: errorApartment.details });
+      }
+
       const data = await Apartment.updateById(apartmentPayload, req.params.id);
       res.status(200).send(data);
     } catch (err) {

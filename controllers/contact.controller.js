@@ -21,12 +21,26 @@ class contactController {
       }
 
       const contactExists = await Contact.contactAlreadyExists(clientPayloadContact.email);
-      if (contactExists) {
+      if (contactExists && !req.body.apartment && !req.body.startDate && !req.body.endDate) {
+        const findExistcontact = await Contact.findByEmail(clientPayloadContact.email);
+        const newMessage = await Message.createMessage(clientPayloadMessage, findExistcontact.id);
+        await Mailer.sendMail(req.body, req.currentLanguage);
+        return res.status(201).send({ ...newMessage });
+      }
+
+      if (contactExists && req.body.apartment && req.body.startDate && req.body.endDate) {
         const findExistcontact = await Contact.findByEmail(clientPayloadContact.email);
         const newBooking = await Booking.createBooking(clientPayloadBooking, findExistcontact.id);
         const newMessage = await Message.createMessage(clientPayloadMessage, findExistcontact.id, newBooking.id);
         await Mailer.sendMail(req.body, req.currentLanguage);
         return res.status(201).send({ ...newMessage, ...newBooking });
+      }
+
+      if (!contactExists && !req.body.apartment && !req.body.startDate && !req.body.endDate) {
+        const newContact = await Contact.createContact(clientPayloadContact);
+        const newMessage = await Message.createMessage(clientPayloadMessage, newContact.id);
+        await Mailer.sendMail(req.body, req.currentLanguage);
+        return res.status(201).send({ ...newContact, ...newMessage });
       }
 
       const newContact = await Contact.createContact(clientPayloadContact);
@@ -35,7 +49,9 @@ class contactController {
       await Mailer.sendMail(req.body, req.currentLanguage);
       return res.status(201).send({ ...newContact, ...newMessage, ...newBooking });
     } catch (err) {
-      console.error(err);
+      res.status(500).send({
+        errorMessage: err.message || 'Some error occurred while retrieving contacts.'
+      });
     }
   }
 
@@ -52,6 +68,10 @@ class contactController {
 
   static async createContact (req, res) {
     try {
+      const error = Contact.validate(req.body).error;
+      if (error) {
+        return res.status(422).send({ errorMessage: error.message, errorDetails: error.details });
+      }
       const contactExists = await Contact.contactAlreadyExists(req.body.email);
       if (contactExists) {
         res.status(400).send({ errorMessage: 'Email already extist' });
@@ -86,13 +106,21 @@ class contactController {
     }
 
     try {
+      const error = Contact.validate(req.body).error;
+      if (error) {
+        return res.status(422).send({ errorMessage: error.message, errorDetails: error.details });
+      }
+      const contactExists = await Contact.contactAlreadyExists(req.body.email);
+      if (contactExists) {
+        return res.status(400).send({ errorMessage: 'Email already extist' });
+      }
       const data = await Contact.updateById(req.params.id, req.body);
       res.status(200).send(data);
     } catch (err) {
       if (err.kind === 'not_found') {
-        res.status(404).send({ errorMessage: `Contact with id ${req.params.id} not found.` });
+        res.status(404).send({ errorMessage: `User with id ${req.params.id} not found.` });
       } else {
-        res.status(500).send({ errorMessage: 'Error updating contact with id ' + req.params.id });
+        res.status(500).send({ errorMessage: 'Error updating user with id ' + req.params.id });
       }
     }
   }
