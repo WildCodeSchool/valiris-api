@@ -8,7 +8,6 @@ const JWT_PRIVATE_KEY = process.env.JWT_PRIVATE_KEY;
 class User {
   static validateInfos (attributes) {
     const schema = Joi.object({
-      name: Joi.string().min(1).max(40).required(),
       email: Joi.string().email().required().pattern(new RegExp(/[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,3}/))
     });
     return schema.validate(attributes);
@@ -73,10 +72,10 @@ class User {
     }
   }
 
-  static async updateById (id, name, email) {
+  static async updateById (id, email) {
     return db.query(
-      'UPDATE users SET name = ?, email = ? WHERE id = ?',
-      [name, email, id]
+      'UPDATE users SET email = ? WHERE id = ?',
+      [email, id]
     ).then(() => this.findById(id));
   }
 

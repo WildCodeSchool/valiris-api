@@ -45,7 +45,7 @@ class usersController {
   }
 
   static async update (req, res) {
-    const clientPayloadInfos = { name: req.body.name, email: req.body.email };
+    const clientPayloadInfos = { email: req.body.email };
 
     const userExistsUpdate = await User.userAlreadyExistsUpdate(req.body.email);
 
@@ -59,7 +59,7 @@ class usersController {
         return res.status(422).send({ errorMessage: errorInfos.message, errorDetails: errorInfos.details });
       } else {
         try {
-          const data = await User.updateById(req.params.id, req.body.name, req.body.email);
+          const data = await User.updateById(req.params.id, req.body.email);
           res.status(200).send(data);
         } catch (err) {
           if (err.kind === 'not_found') {
