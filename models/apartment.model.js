@@ -18,10 +18,10 @@ class Apartment {
   static validate (attributes) {
     const schema = Joi.object({
       name: Joi.string().min(1).max(40).required(),
-      details_fr: Joi.string().min(10).required(),
-      details_en: Joi.string().min(10).required(),
-      title_fr: Joi.string().min(5).required(),
-      title_en: Joi.string().min(5).required(),
+      details_fr: Joi.string().min(1).required(),
+      details_en: Joi.string().min(1).required(),
+      title_fr: Joi.string().min(1).required(),
+      title_en: Joi.string().min(1).required(),
       week_price: Joi.number().required(),
       month_price: Joi.number().required(),
       main_picture_url: Joi.required()
