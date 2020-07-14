@@ -8,6 +8,7 @@ const JWT_PRIVATE_KEY = process.env.JWT_PRIVATE_KEY;
 class User {
   static validateInfos (attributes) {
     const schema = Joi.object({
+      name: Joi.string(),
       email: Joi.string().email().required().pattern(new RegExp(/[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,3}/))
     });
     return schema.validate(attributes);
