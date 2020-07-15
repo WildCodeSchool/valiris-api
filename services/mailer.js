@@ -117,10 +117,10 @@ class mailer {
                         <td valign="top" align="center" style="padding:0;Margin:0;width:560px"> 
                          <table style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;background-position:center bottom;background-color:transparent" width="100%" cellspacing="0" cellpadding="0" bgcolor="transparent" role="presentation"> 
                            <tr style="border-collapse:collapse"> 
-                            <td bgcolor="transparent" align="left" style="padding:0;Margin:0;padding-bottom:5px;padding-top:10px"><h3 style="Margin:0;line-height:24px;mso-line-height-rule:exactly;font-family:roboto, 'helvetica neue', helvetica, arial, sans-serif;font-size:20px;font-style:normal;font-weight:bold;color:#319797">${lang ==='en' ? 'Hello' : 'Bonjour' } ${body.firstname},</h3></td> 
+                            <td bgcolor="transparent" align="left" style="padding:0;Margin:0;padding-bottom:5px;padding-top:10px"><h3 style="Margin:0;line-height:24px;mso-line-height-rule:exactly;font-family:roboto, 'helvetica neue', helvetica, arial, sans-serif;font-size:20px;font-style:normal;font-weight:bold;color:#319797">${lang === 'en' ? 'Hello' : 'Bonjour'} ${body.firstname},</h3></td> 
                            </tr> 
                            <tr style="border-collapse:collapse"> 
-                            <td bgcolor="transparent" align="left" style="padding:0;Margin:0;padding-top:10px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-size:14px;font-family:roboto, 'helvetica neue', helvetica, arial, sans-serif;line-height:21px;color:#666666">${lang ==='en' ? 'We have taken your request into account. We will get back to you very quickly.':'Nous avons bien pris en compte votre demande, nous vous recontacterons rapidement.'}</p></td> 
+                            <td bgcolor="transparent" align="left" style="padding:0;Margin:0;padding-top:10px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-size:14px;font-family:roboto, 'helvetica neue', helvetica, arial, sans-serif;line-height:21px;color:#666666">${lang === 'en' ? 'We have taken your request into account. We will get back to you very quickly.' : 'Nous avons bien pris en compte votre demande, nous vous recontacterons rapidement.'}</p></td> 
                            </tr> 
                          </table></td> 
                        </tr> 
@@ -177,11 +177,11 @@ class mailer {
                            <br> 
                            <tr style="border-collapse:collapse"> 
                             <td bgcolor="transparent" align="left" style="padding:0;Margin:0;padding-bottom:5px;padding-left:5px;padding-right:5px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-size:15px;font-family:roboto, 'helvetica neue', helvetica, arial, sans-serif;line-height:30px;color:#666666"><strong>
-                            ${body.startDate ? 
-                                lang === 'en' ? 
-                                  `<span style='color:#319797'>Starting date:</span> ${moment(body.startDate).format('DD/MM/YYYY')}<br><span style='color:#319797'>Ending date:</span> ${moment(body.endDate).format('DD/MM/YYYY')}` : 
-                                  `<span style='color:#319797'>Date de début:</span> ${moment(body.startDate).format('DD/MM/YYYY')}<br><span style='color:#319797'>Date de fin:</span> ${moment(body.endDate).format('DD/MM/YYYY')}` : 
-                                  ''}
+                            ${body.startDate
+                                ? lang === 'en'
+                                  ? `<span style='color:#319797'>Starting date:</span> ${moment(body.startDate).format('DD/MM/YYYY')}<br><span style='color:#319797'>Ending date:</span> ${moment(body.endDate).format('DD/MM/YYYY')}`
+                                  : `<span style='color:#319797'>Date de début:</span> ${moment(body.startDate).format('DD/MM/YYYY')}<br><span style='color:#319797'>Date de fin:</span> ${moment(body.endDate).format('DD/MM/YYYY')}`
+                                  : ''}
                                 <br><span style='color:#319797'>Message:</span><br> ${body.message}
                                 </strong><br><br>${lang === 'en' ? 'Regards, ' : 'Cordialement, '}<strong><span style="font-size:16px;color:#319797"><br>Valiris Résidence</span></strong></p><br><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-size:14px;font-family:roboto, 'helvetica neue', helvetica, arial, sans-serif;line-height:28px;color:#2980D9"><br></p></td> 
                            </tr> 
@@ -237,7 +237,7 @@ class mailer {
        </body>
       </html>      
     `;
- 
+
     const outputAdmin = `
     <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
     <html xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office" style="width:100%;font-family:roboto, 'helvetica neue', helvetica, arial, sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;padding:0;Margin:0">
