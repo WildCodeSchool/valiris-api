@@ -9,7 +9,7 @@ class ApartmentController {
       if (err.kind === 'not_found') {
         res.status(404).send({ errorMessage: `Apartment with id ${req.params.id} not found.` });
       } else {
-        console.log(err);
+        console.error(err);
         res.status(500).send({ errorMessage: 'Error retrieving Apartment with id ' + req.params.id });
       }
     }
@@ -36,7 +36,7 @@ class ApartmentController {
       if (err.kind === 'not_found') {
         res.status(404).send({ errorMessage: `Apartment with id ${req.params.id} not found.` });
       } else {
-        console.log(err);
+        console.error(err);
         res.status(500).send({ errorMessage: 'Error retrieving Apartment with id ' + req.params.id });
       }
     }
@@ -67,7 +67,7 @@ class ApartmentController {
 
       const errorApartment = Apartment.validate(apartmentPayload).error;
       if (errorApartment) {
-        console.log(errorApartment.message);
+        console.error(errorApartment.message);
         return res.status(422).send({ errorMessage: errorApartment.message, errorDetails: errorApartment.details });
       }
 
@@ -94,7 +94,7 @@ class ApartmentController {
 
       const errorApartment = Apartment.validate(apartmentPayload).error;
       if (errorApartment) {
-        console.log(errorApartment.message);
+        console.error(errorApartment.message);
         return res.status(422).send({ errorMessage: errorApartment.message, errorDetails: errorApartment.details });
       }
 
@@ -128,7 +128,6 @@ class ApartmentController {
       res.status(400).send({ errorMessage: 'Content can not be empty!' });
     }
     try {
-      console.log(req.body.picture.url);
       const data = await Apartment.updateSecondaryPictures(req.body.picture.url, req.body.picture.id);
       res.status(200).send(data);
     } catch (err) {

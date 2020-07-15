@@ -20,7 +20,7 @@ class BookingController {
       if (err.kind === 'not_found') {
         res.status(404).send({ errorMessage: `Apartment with id ${req.params.id} not found.` });
       } else {
-        console.log(err);
+        console.error(err);
         res.status(500).send({ errorMessage: 'Error retrieving Apartment with id ' + req.params.id });
       }
     }
@@ -42,7 +42,7 @@ class BookingController {
       const data = await Booking.validateOne(req.body);
       res.status(200).send(data);
     } catch (err) {
-      console.log(err.message);
+      console.error(err.message);
       res.status(500).send({
         errorMessage: 'An error happened while you tried to validate a booking.'
       });
@@ -56,7 +56,6 @@ class BookingController {
       return res.status(422).send({ errorMessage: errorDate.message, errorDetails: errorDate.details });
     }
     try {
-      console.log(req.body);
       const newBooking = await Booking.createBookingBack(req.body);
       res.status(201).send(newBooking);
     } catch (err) {
@@ -77,7 +76,7 @@ class BookingController {
       if (err.kind === 'not_found') {
         res.status(404).send({ errorMessage: `Booking with id ${req.params.id} not found.` });
       } else {
-        console.log(err);
+        console.error(err);
         res.status(500).send({ errorMessage: 'Error updating booking with id ' + req.params.id });
       }
     }
