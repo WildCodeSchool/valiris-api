@@ -155,6 +155,23 @@ class ApartmentController {
       }
     }
   }
+
+  static async deleteSecondary (req, res) {
+    try {
+      await Apartment.removeSecondary(req.params.id);
+      res.send({ message: 'Secondary photo was deleted successfully!' });
+    } catch (err) {
+      if (err.kind === 'not_found') {
+        res.status(404).send({
+          message: `Not found photo with id ${req.params.id}.`
+        });
+      } else {
+        res.status(500).send({
+          message: 'Could not delete photo with id ' + req.params.id + err
+        });
+      }
+    }
+  }
 }
 
 module.exports = ApartmentController;
