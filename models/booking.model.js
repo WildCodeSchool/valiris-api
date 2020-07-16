@@ -11,7 +11,7 @@ class Booking {
   }
 
   static async getAll () {
-    return db.query('SELECT DISTINCT b.id, c.firstname, c.lastname, c.phone, c.email, b.starting_date, b.ending_date, m.content, b.validation FROM booking b LEFT JOIN contact c ON c.id = b.id_contact LEFT JOIN message m ON b.id = m.id_booking WHERE validation = 0 AND starting_date IS NOT NULL AND ending_date IS NOT NULL');
+    return db.query('SELECT DISTINCT b.id, a.name, c.firstname, c.lastname, c.phone, c.email, b.starting_date, b.ending_date, m.content, b.validation FROM booking b LEFT JOIN contact c ON c.id = b.id_contact LEFT JOIN message m ON b.id = m.id_booking LEFT JOIN apartment a ON b.id_apartment = a.id WHERE validation = 0 AND starting_date IS NOT NULL AND ending_date IS NOT NULL');
   }
 
   static async getAllInfos () {
@@ -68,7 +68,6 @@ class Booking {
   }
 
   static async updateById (id, booking) {
-    console.log(booking);
     return db.query(
       'UPDATE booking SET starting_date = ?, ending_date = ?, id_apartment = ?, id_contact = ?, validation = ? WHERE id = ?',
       [booking.starting_date, booking.ending_date, booking.id_apartment, booking.id_contact, booking.validation, id])
