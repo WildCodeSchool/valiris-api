@@ -6,7 +6,6 @@ const YAML = require('yamljs');
 const swaggerDocument = YAML.load('./docs/swagger.yaml');
 const extractClientLanguage = require('./middlewares/extractClientLanguage');
 const extractToken = require('./middlewares/extractToken');
-const requireAuth = require('./middlewares/requireAuth');
 
 const app = express();
 const PORT = process.env.PORT || (process.env.NODE_ENV === 'test' ? 3001 : 3000);
@@ -57,7 +56,6 @@ app.use('/bookings', require('./routes/booking.routes.js'));
 app.use(extractToken);
 app.use('/users', require('./routes/user.routes.js'));
 app.use('/auth', require('./routes/auth.routes.js'));
-app.use('/secret', requireAuth, require('./routes/secret.routes.js'));
 
 app.use((err, req, res, next) => {
   if (err.name === 'UnauthorizedError') {
@@ -69,6 +67,10 @@ app.use((error, req, res, next) => {
   res.status(500).send('Something Broke!');
 });
 app.set('x-powered-by', false);
+
+app.use(extractToken);
+app.use('/users', require('./routes/user.routes.js'));
+app.use('/auth', require('./routes/auth.routes.js'));
 
 app.use((err, req, res, next) => {
   if (err.name === 'UnauthorizedError') {
