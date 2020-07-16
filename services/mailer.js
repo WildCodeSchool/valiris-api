@@ -67,7 +67,7 @@ class mailer {
         mso-hide:all;
       }
       .es-button-border:hover a.es-button {
-        background:#3498!important;
+        background:#3498db!important;
         border-color:#3498db!important;
       }
       .es-button-border:hover {
