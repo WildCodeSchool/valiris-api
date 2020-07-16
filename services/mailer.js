@@ -477,7 +477,7 @@ class mailer {
 
     const mailOptionsUser = {
       from: `"Valiris Résidence" <${process.env.MAIL_USER}>`,
-      to: process.env.MAIL_USER,
+      to: body.email,
       subject: `Valiris Résidence - ${lang === 'en' ? 'Summary of your request' : 'Récapitulatif de votre demande'}`,
       html: outputUser
     };

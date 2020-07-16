@@ -163,6 +163,19 @@ class Apartment {
         }
       });
   }
+
+  static async removeSecondary (id) {
+    return db.query('DELETE FROM secondary_picture WHERE id = ?', [id])
+      .then(res => {
+        if (res.affectedRows !== 0) {
+          return Promise.resolve();
+        } else {
+          const err = new Error();
+          err.kind = 'not_found';
+          return Promise.reject(err);
+        }
+      });
+  }
 }
 
 module.exports = Apartment;
