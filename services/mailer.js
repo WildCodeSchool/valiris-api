@@ -476,15 +476,15 @@ class mailer {
     });
 
     const mailOptionsUser = {
-      from: '"Valiris Résidence" <testP3wcs@gmail.com>',
-      to: 'testP3wcs@gmail.com',
+      from: `"Valiris Résidence" <${process.env.MAIL_USER}>`,
+      to: body.email,
       subject: `Valiris Résidence - ${lang === 'en' ? 'Summary of your request' : 'Récapitulatif de votre demande'}`,
       html: outputUser
     };
 
     const mailOptionsAdmin = {
-      from: '"Valiris Résidence" <testP3wcs@gmail.com>',
-      to: 'testP3wcs@gmail.com',
+      from: `"Valiris Résidence" <${process.env.MAIL_USER}>`,
+      to: process.env.MAIL_USER,
       subject: 'Prise de contact - Valiris Résidence',
       html: outputAdmin
     };

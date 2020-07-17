@@ -94,7 +94,7 @@ class contactController {
       if (err.kind === 'not_found') {
         res.status(404).send({ errorMessage: `Contact with id ${req.params.id} not found.` });
       } else {
-        console.log(err);
+        console.error(err);
         res.status(500).send({ errorMessage: 'Error retrieving contact with id ' + req.params.id });
       }
     }

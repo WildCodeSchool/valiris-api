@@ -38,7 +38,7 @@ class usersController {
       if (err.kind === 'not_found') {
         res.status(404).send({ errorMessage: `User with id ${req.params.id} not found.` });
       } else {
-        console.log(err);
+        console.error(err);
         res.status(500).send({ errorMessage: 'Error retrieving user account details with id ' + req.params.id });
       }
     }
@@ -65,7 +65,7 @@ class usersController {
           if (err.kind === 'not_found') {
             res.status(404).send({ errorMessage: `User with id ${req.params.id} not found.` });
           } else {
-            console.log(err);
+            console.error(err);
             res.status(500).send({ errorMessage: 'Error updating user with id ' + req.params.id });
           }
         }
@@ -89,7 +89,7 @@ class usersController {
           if (err.kind === 'not_found') {
             res.status(404).send({ errorMessage: `User with id ${req.params.id} not found.` });
           } else {
-            console.log(err);
+            console.error(err);
             res.status(500).send({ errorMessage: 'Error updating user with id ' + req.params.id });
           }
         }

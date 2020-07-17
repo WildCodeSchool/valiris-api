@@ -4,9 +4,8 @@ class messageController {
   static async create (req, res) {
     const clientPayload = req.body;
     const { error } = Message.validate(clientPayload);
-    console.log(clientPayload);
     if (error) {
-      console.log(JSON.stringify(error));
+      console.error(error);
       return res.status(422).send({ errorMessage: error.message, errorDetails: error.details });
     } else {
       const newMessage = await Message.create(clientPayload);
