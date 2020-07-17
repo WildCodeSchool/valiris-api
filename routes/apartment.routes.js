@@ -12,7 +12,7 @@ router.patch('/:id', apartmentsController.update);
 router.patch('/:id/updateSecondary', apartmentsController.updateSecondary);
 router.post('/:id/updateNewSecondary', apartmentsController.updateNewSecondary);
 router.delete('/:id', apartmentsController.delete);
-router.delete('/secondary/:id', apartmentsController.deleteSecondary)
+router.delete('/secondary/:id', apartmentsController.deleteSecondary);
 
 router.get('/:id/availabilities', availabilitiesController.findAllById);
 router.get('/availabilities/all', availabilitiesController.findAll);
