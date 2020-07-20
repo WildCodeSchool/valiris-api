@@ -421,8 +421,7 @@ class mailer {
                         <tr style="border-collapse:collapse"> 
                           <td bgcolor="transparent" align="left" style="padding:0;Margin:0;padding-bottom:5px;padding-left:5px;padding-right:5px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-size:15px;font-family:roboto, 'helvetica neue', helvetica, arial, sans-serif;line-height:30px;color:#666666"><strong>
                           ${body.apartmentName
-                            ?
-                              `<span style='color:#319797'>Appartement:</span> ${body.apartmentName}`
+                            ? `<span style='color:#319797'>Appartement:</span> ${body.apartmentName}`
                               : ''}
                           <br />
                           ${body.startDate ? `<span style='color:#319797'>Date de début :</span> ${moment(body.startDate).format('DD/MM/YYYY')}<br><span style='color:#319797'>Date&nbsp;de&nbsp;fin :</span> ${moment(body.endDate).format('DD/MM/YYYY')}` : ''}<br><span style='color:#319797'>Téléphone :</span> ${body.phone}<br><span style='color:#319797'>Email :</span> ${body.email}<br><span style='color:#319797'>Message :</span> ${body.message}</strong><br><br>Cordialement,<br><strong><span style="font-size:19px;color:#319797">Valiris Résidence</span></strong></p><br><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-size:14px;font-family:roboto, 'helvetica neue', helvetica, arial, sans-serif;line-height:28px;color:#2980D9"><br></p></td> 
