@@ -28,6 +28,21 @@ process.on('beforeExit', () => {
 app.use(express.json());
 app.use(cors());
 app.use('/uploads', express.static('uploads'));
+app.use('/show-uploads-dir', (req, res) => {
+  // requiring path and fs modules
+  const path = require('path');
+  const fs = require('fs');
+  // joining path of directory
+  const directoryPath = path.join(__dirname, 'uploads');
+  // passsing directoryPath and callback function
+  fs.readdir(directoryPath, function (err, files) {
+    // handling error
+    if (err) {
+      return console.log('Unable to scan directory: ' + err);
+    }
+    res.send(files);
+  });
+});
 
 if (process.env.NODE_ENV !== 'production') {
   app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
@@ -56,7 +71,7 @@ app.set('x-powered-by', false);
 // set port, listen for requests
 const server = app.listen(PORT, () => {
   if (process.env.NODE_ENV !== 'test') {
-    console.log('Server is running on port ' + PORT);
+    console.log('Server running on port ' + PORT);
   }
 });
 
