@@ -120,7 +120,7 @@ class mailer {
                             <td bgcolor="transparent" align="left" style="padding:0;Margin:0;padding-bottom:5px;padding-top:10px"><h3 style="Margin:0;line-height:24px;mso-line-height-rule:exactly;font-family:roboto, 'helvetica neue', helvetica, arial, sans-serif;font-size:20px;font-style:normal;font-weight:bold;color:#319797">${lang === 'en' ? 'Hello' : 'Bonjour'} ${body.firstname},</h3></td> 
                           </tr> 
                           <tr style="border-collapse:collapse"> 
-                            <td bgcolor="transparent" align="left" style="padding:0;Margin:0;padding-top:10px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-size:14px;font-family:roboto, 'helvetica neue', helvetica, arial, sans-serif;line-height:21px;color:#666666">${lang === 'en' ? 'We have taken your request into account. We will get back to you very quickly.' : 'Nous avons bien pris en compte votre demande, nous vous recontacterons rapidement.'}</p></td> 
+                            <td bgcolor="transparent" align="left" style="padding:0;Margin:0;padding-top:10px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-size:14px;font-family:roboto, 'helvetica neue', helvetica, arial, sans-serif;line-height:21px;color:#666666">${lang === 'en' ? 'We have received your request. We will get back to you very quickly.' : 'Nous avons bien pris en compte votre demande, nous vous recontacterons rapidement.'}</p></td> 
                           </tr> 
                         </table></td> 
                       </tr> 
