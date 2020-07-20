@@ -5,7 +5,8 @@ class Booking {
   static validate (attributes) {
     const schema = Joi.object({
       starting_date: Joi.date().required(),
-      ending_date: Joi.date().required()
+      ending_date: Joi.date().min(Joi.ref('starting_date')).required(),
+      id_apartment : Joi.string().min(1).required()
     });
     return schema.validate(attributes);
   }
