@@ -4,7 +4,7 @@ const Joi = require('@hapi/joi');
 class Booking {
   static validate (attributes) {
     const schema = Joi.object({
-      starting_date: Joi.date().required(),
+      starting_date: Joi.date().min("now").required(),
       ending_date: Joi.date().min(Joi.ref('starting_date')).required(),
       id_apartment: Joi.string().min(1).required()
     });
