@@ -51,6 +51,16 @@ class Contact {
     });
   }
 
+  static async contactAlreadyExistsUpdate (contactEmail, contactId) {
+    return db.query('SELECT COUNT(id) AS count FROM contact WHERE email = ? AND id != ?', [contactEmail, contactId]).then(rows => {
+      if (rows[0].count) {
+        return Promise.resolve(true);
+      } else {
+        return Promise.resolve(false);
+      }
+    });
+  }
+
   static async getAll () {
     return db.query('SELECT * FROM contact');
   }
