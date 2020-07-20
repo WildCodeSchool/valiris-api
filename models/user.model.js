@@ -37,9 +37,9 @@ class User {
     });
   }
 
-  static async userAlreadyExistsUpdate (email) {
-    return db.query('SELECT COUNT(id) AS count FROM users WHERE email = ?', [email]).then(rows => {
-      if (rows[0].count > 1) {
+  static async userAlreadyExistsUpdate (email, id) {
+    return db.query('SELECT COUNT(id) AS count FROM users WHERE email = ? AND id != ?', [email, id]).then(rows => {
+      if (rows[0].count) {
         return Promise.resolve(true);
       } else {
         return Promise.resolve(false);
@@ -73,10 +73,10 @@ class User {
     }
   }
 
-  static async updateById (id, email) {
+  static async updateById (id, email, name) {
     return db.query(
-      'UPDATE users SET email = ? WHERE id = ?',
-      [email, id]
+      'UPDATE users SET email = ?, name = ? WHERE id = ?',
+      [email, name, id]
     ).then(() => this.findById(id));
   }
 
