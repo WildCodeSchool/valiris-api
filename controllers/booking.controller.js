@@ -26,17 +26,6 @@ class BookingController {
     }
   }
 
-  static async findAllInfos (req, res) {
-    try {
-      const data = await Booking.getAllInfos();
-      res.status(200).send(data);
-    } catch (err) {
-      res.status(500).send({
-        errorMessage: err.message || 'Some error occurred while retrieving information requests.'
-      });
-    }
-  }
-
   static async validateOne (req, res) {
     try {
       const data = await Booking.validateOne(req.body);
