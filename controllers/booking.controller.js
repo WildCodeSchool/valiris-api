@@ -42,7 +42,7 @@ class BookingController {
     const bookingPayload = { starting_date: req.body.starting_date, ending_date: req.body.ending_date, id_apartment: req.body.id_apartment };
     const errorBooking = Booking.validate(bookingPayload).error;
     if (errorBooking) {
-      return res.status(422).send({ errorMessage: errorBooking.message, errorDetails: errorBooking.details });
+      return res.status(422).send({ errorMessage: "Starting date of the booking cannot be before today.", errorDetails: errorBooking.details });
     }
     try {
       const newBooking = await Booking.createBookingBack(req.body);
