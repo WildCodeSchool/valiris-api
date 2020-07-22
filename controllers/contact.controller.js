@@ -12,6 +12,7 @@ class contactController {
 
       const errorContact = Contact.validate(clientPayloadContact).error;
       const errorMessage = Message.validate(clientPayloadMessage).error;
+      const errorBooking = Booking.validate(clientPayloadBooking).error;
       if (errorContact) {
         return res.status(422).send({ errorMessage: errorContact.message, errorDetails: errorContact.details });
       }
@@ -29,6 +30,9 @@ class contactController {
       }
 
       if (contactExists && req.body.apartment && req.body.startDate && req.body.endDate) {
+        if (errorBooking) {
+          return res.status(422).send({ errorMessage: errorBooking.message, errorDetails: errorBooking.details });
+        }
         const findExistcontact = await Contact.findByEmail(clientPayloadContact.email);
         const newBooking = await Booking.createBooking(clientPayloadBooking, findExistcontact.id);
         const newMessage = await Message.createMessage(clientPayloadMessage, findExistcontact.id, newBooking.id);
@@ -41,6 +45,10 @@ class contactController {
         const newMessage = await Message.createMessage(clientPayloadMessage, newContact.id);
         await Mailer.sendMail(req.body, req.currentLanguage);
         return res.status(201).send({ ...newContact, ...newMessage });
+      }
+
+      if (errorBooking) {
+        return res.status(422).send({ errorMessage: errorBooking.message, errorDetails: errorBooking.details });
       }
 
       const newContact = await Contact.createContact(clientPayloadContact);
@@ -110,7 +118,7 @@ class contactController {
       if (error) {
         return res.status(422).send({ errorMessage: error.message, errorDetails: error.details });
       }
-      const contactExists = await Contact.contactAlreadyExists(req.body.email);
+      const contactExists = await Contact.contactAlreadyExistsUpdate(req.body.email, req.params.id);
       if (contactExists) {
         return res.status(400).send({ errorMessage: 'Email already extist' });
       }

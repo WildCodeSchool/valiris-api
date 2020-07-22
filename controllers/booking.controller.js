@@ -26,17 +26,6 @@ class BookingController {
     }
   }
 
-  static async findAllInfos (req, res) {
-    try {
-      const data = await Booking.getAllInfos();
-      res.status(200).send(data);
-    } catch (err) {
-      res.status(500).send({
-        errorMessage: err.message || 'Some error occurred while retrieving information requests.'
-      });
-    }
-  }
-
   static async validateOne (req, res) {
     try {
       const data = await Booking.validateOne(req.body);
@@ -50,10 +39,10 @@ class BookingController {
   }
 
   static async create (req, res) {
-    const datePayload = { starting_date: req.body.starting_date, ending_date: req.body.ending_date };
-    const errorDate = Booking.validate(datePayload).error;
-    if (errorDate) {
-      return res.status(422).send({ errorMessage: errorDate.message, errorDetails: errorDate.details });
+    const bookingPayload = { starting_date: req.body.starting_date, ending_date: req.body.ending_date, id_apartment: req.body.id_apartment };
+    const errorBooking = Booking.validate(bookingPayload).error;
+    if (errorBooking) {
+      return res.status(422).send({ errorMessage: errorBooking.message, errorDetails: errorBooking.details });
     }
     try {
       const newBooking = await Booking.createBookingBack(req.body);

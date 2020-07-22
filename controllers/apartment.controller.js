@@ -44,7 +44,8 @@ class ApartmentController {
 
   static async upload (req, res) {
     try {
-      const currentPicture = req.file ? req.file.path.replace('\\', '/') : null;
+      console.log('uploaded file : ', req.file);
+      const currentPicture = req.file ? 'uploads/' + req.file.filename : null;
       res.status(200).send(currentPicture);
     } catch (err) {
       console.error(err);
@@ -150,6 +151,23 @@ class ApartmentController {
       } else {
         res.status(500).send({
           message: 'Could not delete contact with id ' + req.params.id + err
+        });
+      }
+    }
+  }
+
+  static async deleteSecondary (req, res) {
+    try {
+      await Apartment.removeSecondary(req.params.id);
+      res.send({ message: 'Secondary photo was deleted successfully!' });
+    } catch (err) {
+      if (err.kind === 'not_found') {
+        res.status(404).send({
+          message: `Not found photo with id ${req.params.id}.`
+        });
+      } else {
+        res.status(500).send({
+          message: 'Could not delete photo with id ' + req.params.id + err
         });
       }
     }

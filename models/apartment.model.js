@@ -24,7 +24,7 @@ class Apartment {
       title_en: Joi.string().min(1).required(),
       week_price: Joi.number().required(),
       month_price: Joi.number().required(),
-      main_picture_url: Joi.required()
+      main_picture_url: Joi.string().min(1).required()
     });
     return schema.validate(attributes);
   }
@@ -153,6 +153,19 @@ class Apartment {
 
   static async remove (id) {
     return db.query('DELETE FROM apartment WHERE id = ?', [id])
+      .then(res => {
+        if (res.affectedRows !== 0) {
+          return Promise.resolve();
+        } else {
+          const err = new Error();
+          err.kind = 'not_found';
+          return Promise.reject(err);
+        }
+      });
+  }
+
+  static async removeSecondary (id) {
+    return db.query('DELETE FROM secondary_picture WHERE id = ?', [id])
       .then(res => {
         if (res.affectedRows !== 0) {
           return Promise.resolve();
