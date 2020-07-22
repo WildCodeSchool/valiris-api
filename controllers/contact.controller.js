@@ -88,6 +88,7 @@ class contactController {
         res.status(201).send(newContact);
       }
     } catch (err) {
+      console.log(err.message);
       res.status(500).send({
         errorMessage: err.message || 'Some error occurred while creating the contact.'
       });
@@ -120,7 +121,7 @@ class contactController {
       }
       const contactExists = await Contact.contactAlreadyExistsUpdate(req.body.email, req.params.id);
       if (contactExists) {
-        return res.status(400).send({ errorMessage: 'Email already extist' });
+        return res.status(400).send({ errorMessage: 'Email already exists' });
       }
       const data = await Contact.updateById(req.params.id, req.body);
       res.status(200).send(data);
