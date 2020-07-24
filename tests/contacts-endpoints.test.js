@@ -2,26 +2,12 @@ const request = require('supertest');
 const app = require('../server.js');
 const _ = require('lodash');
 
-describe('contact endpoints', () => {
-  describe('POST /contacts', () => {
+describe('apartment endpoints', () => {
+  describe('Get /apartments/:id', () => {
     describe('when the payload is valid', () => {
-      it('returns 201 status code and the updated object when everything is provided', async () => {
-        const validContact = {
-          lastname: 'Trapet',
-          firstname: 'Lancelot',
-          email: 'lens78@gmail.com',
-          phone: '600000000',
-          message: 'hello world',
-          apartment: '3',
-          startDate: '2020-08-03',
-          endDate: '2020-08-17'
-        };
-        return request(app).post('/contacts').send(validContact).expect(201).then(res => {
+      it('returns 200 status code and the list of apartment', async () => {
+        return request(app).get('/apartments/1').expect(200).then(res => {
           expect(_.isPlainObject(res.body));
-          expect(res.body).toHaveProperty('lastname');
-          expect(res.body).toHaveProperty('email');
-          expect(res.body).toHaveProperty('content');
-          expect(res.body.firstname).toBe('Lancelot');
         });
       });
     });
