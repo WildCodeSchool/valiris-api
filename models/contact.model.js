@@ -12,8 +12,8 @@ class Contact {
 
   static validate (attributes) {
     const schema = Joi.object({
-      lastname: Joi.string().min(1).max(40).required(),
-      firstname: Joi.string().min(1).max(40).required(),
+      lastname: Joi.string().min(1).max(40).required().pattern(new RegExp(/^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u)),
+      firstname: Joi.string().min(1).max(40).required().pattern(new RegExp(/^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u)),
       email: Joi.string().email().required().pattern(new RegExp(/[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,3}/)),
       phone: Joi.string().min(5).max(15).pattern(new RegExp(/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/))/* eslint-disable-line */
     });
@@ -43,6 +43,16 @@ class Contact {
 
   static async contactAlreadyExists (contactEmail) {
     return db.query('SELECT COUNT(id) AS count FROM contact WHERE email = ?', [contactEmail]).then(rows => {
+      if (rows[0].count) {
+        return Promise.resolve(true);
+      } else {
+        return Promise.resolve(false);
+      }
+    });
+  }
+
+  static async contactAlreadyExistsUpdate (contactEmail, contactId) {
+    return db.query('SELECT COUNT(id) AS count FROM contact WHERE email = ? AND id != ?', [contactEmail, contactId]).then(rows => {
       if (rows[0].count) {
         return Promise.resolve(true);
       } else {

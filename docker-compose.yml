@@ -21,6 +21,8 @@ services:
     depends_on:
       - db
     build: '.'
+    volumes: 
+      - valiris-uploads:/usr/src/app/uploads
     environment:
       - DB_USER=root
       - DB_PASS=root
@@ -33,3 +35,4 @@ services:
   
 volumes:
   valiris-db:
+  valiris-uploads:

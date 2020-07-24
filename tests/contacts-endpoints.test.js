@@ -13,8 +13,8 @@ describe('contact endpoints', () => {
           phone: '600000000',
           message: 'hello world',
           apartment: '3',
-          startDate: '2020-07-03',
-          endDate: '2020-07-17'
+          startDate: '2020-08-03',
+          endDate: '2020-08-17'
         };
         return request(app).post('/contacts').send(validContact).expect(201).then(res => {
           expect(_.isPlainObject(res.body));
