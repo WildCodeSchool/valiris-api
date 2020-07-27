@@ -1,10 +1,11 @@
 const db = require('../db.js');
 const Joi = require('@hapi/joi');
+const moment = require('moment');
 
 class Booking {
   static validate (attributes) {
     const schema = Joi.object({
-      starting_date: Joi.date().min('now').required(),
+      starting_date: Joi.date().min(moment().format('YYYY-MM-DD')).required(),
       ending_date: Joi.date().min(Joi.ref('starting_date')).required(),
       id_apartment: Joi.string().min(1).required()
     });
@@ -12,7 +13,7 @@ class Booking {
   }
 
   static async getAll () {
-    return db.query('SELECT DISTINCT b.id, a.name, c.firstname, c.lastname, c.phone, c.email, b.starting_date, b.ending_date, m.content, b.validation FROM booking b LEFT JOIN contact c ON c.id = b.id_contact LEFT JOIN message m ON b.id = m.id_booking LEFT JOIN apartment a ON b.id_apartment = a.id WHERE validation = 0 AND starting_date IS NOT NULL AND ending_date IS NOT NULL');
+    return db.query('SELECT DISTINCT b.id, a.name, b.id_apartment, c.firstname, c.lastname, c.phone, c.email, b.starting_date, b.ending_date, m.content, b.validation FROM booking b LEFT JOIN contact c ON c.id = b.id_contact LEFT JOIN message m ON b.id = m.id_booking LEFT JOIN apartment a ON b.id_apartment = a.id WHERE validation = 0 AND starting_date IS NOT NULL AND ending_date IS NOT NULL');
   }
 
   static async findById (bookingId) {
@@ -48,8 +49,8 @@ class Booking {
   }
 
   static async validateOne (bookingDetails) {
-    return db.query('UPDATE booking SET validation = 1 WHERE id = ?', [bookingDetails.id])
-      .then(row => db.query(`SELECT * FROM booking WHERE id = ${bookingDetails.id}`));
+    return db.query('UPDATE booking SET validation = 1 WHERE id = ?', [bookingDetails.id_booking])
+      .then(row => db.query(`SELECT * FROM booking WHERE id = ${bookingDetails.id_booking}`));
   }
 
   static async remove (id) {
