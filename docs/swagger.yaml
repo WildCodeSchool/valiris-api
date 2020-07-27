@@ -41,9 +41,9 @@ paths:
         required: true
         schema:
           allOf:
-           - $ref: "#/definitions/ApartmentEditableAttributes"
-           - type: 'object'
-             required:
+          - $ref: "#/definitions/ApartmentEditableAttributes"
+          - type: 'object'
+            required:
               - "email"
       responses:
         "201":
@@ -102,7 +102,7 @@ paths:
         description: "apartment object that needs to be updated"
         required: true
         schema:
-          $ref: "#/definitions/apartmentEditableAttributes"
+          $ref: "#/definitions/ApartmentEditableAttributes"
       responses:
         "200":
           description: "Updated"
@@ -110,7 +110,7 @@ paths:
             type: "object"
             properties:
               data:
-                $ref: "#/definitions/apartment"
+                $ref: "#/definitions/Apartment"
         "404":
           description: "apartment not found"
         "400":
@@ -123,7 +123,7 @@ paths:
     delete:
       tags:
       - "apartment"
-      summary: "Deletes an apartment"
+      summary: "Deletes a apartment"
       description: ""
       parameters:
       - name: "apartmentId"
@@ -138,22 +138,35 @@ paths:
         "200":
           description: "OK"
 definitions:
-  apartmentEditableAttributes:
+  ApartmentEditableAttributes:
     type: "object"
     properties:
-      first_name:
+      name:
         type: "string"
         example: "John"
-      last_name:
+      week_price:
+        type: "number"
+        example: "10"
+      month_price:
+        type: "number"
+        example: "10"
+      details_fr: 
         type: "string"
-        example: "Doe"
-      email: 
+        example: "Super appartement"
+      details_en: 
         type: "string"
-        example: "john.doe@gmail.com"
-      active: 
-        type: "boolean"
+        example: "Great apartment"
+      title_fr: 
+        type: "string"
+        example: "Super appartement"
+      title_en: 
+        type: "string"
+        example: "Great apartment"
+      main_picture_url: 
+        type: "string"
+        example: "/uploads/..."
       
-  apartmentSimplified:
+  ApartmentSimplified:
     type: "object"
     properties:
       id:
@@ -162,18 +175,34 @@ definitions:
       name:
         type: "string"
         example: "John"
-      email: 
+      week_price:
+        type: "number"
+        example: "10"
+      month_price:
+        type: "number"
+        example: "10"
+      details_fr: 
         type: "string"
-        example: "john.doe@gmail.com"
-      active: 
-        type: "boolean"
+        example: "Super appartement"
+      details_en: 
+        type: "string"
+        example: "Great apartment"
+      title_fr: 
+        type: "string"
+        example: "Super appartement"
+      title_en: 
+        type: "string"
+        example: "Great apartment"
+      main_picture_url: 
+        type: "string"
+        example: "/uploads/..."
       
-  apartment:
+  Apartment:
     allOf: 
       - type: "object"
         properties:
           id:
             type: "integer"
             format: "int64"
-      - $ref: '#/definitions/apartmentEditableAttributes'
+      - $ref: '#/definitions/ApartmentEditableAttributes'
       
