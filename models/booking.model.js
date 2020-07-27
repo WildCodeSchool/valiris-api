@@ -1,6 +1,6 @@
 const db = require('../db.js');
 const Joi = require('@hapi/joi');
-const moment = require('moment')
+const moment = require('moment');
 
 class Booking {
   static validate (attributes) {

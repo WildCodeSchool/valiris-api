@@ -56,7 +56,7 @@ class contactController {
       await Mailer.sendMail(req.body, req.currentLanguage);
       return res.status(201).send({ ...newContact, ...newMessage, ...newBooking });
     } catch (err) {
-      console.error(err)
+      console.error(err);
       res.status(500).send({
         errorMessage: err.message || 'Some error occurred while retrieving contacts.'
       });
