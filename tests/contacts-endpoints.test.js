@@ -17,7 +17,7 @@ describe('apartment endpoints', () => {
         main_picture_url: 'main_picture'
       });
 
-      it('returns 200 status code and the list of apartment', async () => {
+      it('returns 200 status code and the list of apartment', () => {
         return request(app).get('/apartments/1').expect(200).then(res => {
           expect(_.isPlainObject(res.body));
         });
