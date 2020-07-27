@@ -7,7 +7,7 @@ describe('apartment endpoints', () => {
   describe('Get /apartments/:id', () => {
     describe('when the payload is valid', () => {
       let createdApartment = null;
-      beforeEach(async () => { 
+      beforeEach(async () => {
         createdApartment = await Apartment.create({
           name: 'Test apartment',
           week_price: 220,
@@ -18,7 +18,7 @@ describe('apartment endpoints', () => {
           title_en: 'title en',
           main_picture_url: 'main_picture'
         });
-      })
+      });
 
       it('returns 200 status code and the list of apartment', () => {
         return request(app).get(`/apartments/${createdApartment.id}`).expect(200).then(res => {
