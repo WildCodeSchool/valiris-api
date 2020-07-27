@@ -79,7 +79,7 @@ class ApartmentController {
       res.status(201).send(newApartment);
     } catch (err) {
       console.error(err);
-      res.status(500).send({
+      res.status(400).send({
         errorMessage: err.message || `Some error occurred while trying to create apartment ${req.body.id}.`
       });
     }

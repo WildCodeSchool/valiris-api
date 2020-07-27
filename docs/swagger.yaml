@@ -1,8 +1,8 @@
 swagger: "2.0"
 info:
-  description: "Simple API to manage customers"
+  description: "API exmple to manage apartments"
   version: "1.0.0"
-  title: "Customers API"
+  title: "Valiris API"
 host: "localhost:3000"
 basePath: "/"
 consumes:
@@ -10,14 +10,14 @@ consumes:
 produces:
 - "application/json"
 tags:
-- name: "customer"
-  description: "operations on customers"
+- name: "Apartment"
+  description: "Operations on apartments"
 paths:
-  /customers:
+  /apartments:
     get:
       tags:
-      - "customer"
-      summary: "Get a list of customers"
+      - "apartment"
+      summary: "Get a list of apartments"
       description: ""
       responses:
         "200":
@@ -28,20 +28,20 @@ paths:
               data:
                 type: 'array'
                 items: 
-                  $ref: '#/definitions/CustomerSimplified'
+                  $ref: '#/definitions/ApartmentSimplified'
     post:
       tags:
-      - "customer"
-      summary: "Add a new customer"
+      - "apartment"
+      summary: "Add a new apartment"
       description: ""
       parameters:
       - in: "body"
-        name: "customer"
-        description: "Customer object that needs to be added in DB"
+        name: "apartment"
+        description: "Apartment object that needs to be added in DB"
         required: true
         schema:
           allOf:
-           - $ref: "#/definitions/CustomerEditableAttributes"
+           - $ref: "#/definitions/ApartmentEditableAttributes"
            - type: 'object'
              required:
               - "email"
@@ -52,25 +52,25 @@ paths:
             type: "object"
             properties:
               data:
-                $ref: "#/definitions/Customer"
+                $ref: "#/definitions/Apartment"
         "400":
-          description: "Invalid input. The customer object provided is not valid"
+          description: "Invalid input. The apartment object provided is not valid"
           schema:
             type: 'object'
             properties:
               errorMessage:
                 type: "string"
           
-  /customers/{customerId}:
+  /apartments/{apartmentId}:
     get:
       tags:
-      - "customer"
-      summary: "Find a customer by ID"
-      description: "Returns a single customer"
+      - "apartment"
+      summary: "Find an apartment by ID"
+      description: "Returns a single apartment"
       parameters:
-      - name: "customerId"
+      - name: "apartmentId"
         in: "path"
-        description: "ID of customer to return"
+        description: "ID of apartment to return"
         required: true
         type: "integer"
         format: "int64"
@@ -82,27 +82,27 @@ paths:
             properties:
               data:
                 type: "object"
-                $ref: "#/definitions/Customer"
+                $ref: "#/definitions/Apartment"
         "404":
-          description: "customer not found"
+          description: "apartment not found"
     put:
       tags:
-      - "customer"
-      summary: "Update an existing customer"
+      - "apartment"
+      summary: "Update an existing apartment"
       description: ""
       parameters:
-      - name: "customerId"
+      - name: "apartmentId"
         in: "path"
-        description: "ID of customer to return"
+        description: "ID of apartment to return"
         required: true
         type: "integer"
         format: "int64"
       - in: "body"
-        name: "customer"
-        description: "customer object that needs to be updated"
+        name: "apartment"
+        description: "apartment object that needs to be updated"
         required: true
         schema:
-          $ref: "#/definitions/CustomerEditableAttributes"
+          $ref: "#/definitions/apartmentEditableAttributes"
       responses:
         "200":
           description: "Updated"
@@ -110,11 +110,11 @@ paths:
             type: "object"
             properties:
               data:
-                $ref: "#/definitions/Customer"
+                $ref: "#/definitions/apartment"
         "404":
-          description: "customer not found"
+          description: "apartment not found"
         "400":
-          description: "Invalid input. The customer object provided is not valid"
+          description: "Invalid input. The apartment object provided is not valid"
           schema:
             type: 'object'
             properties:
@@ -122,23 +122,23 @@ paths:
                 type: "string"
     delete:
       tags:
-      - "customer"
-      summary: "Deletes a customer"
+      - "apartment"
+      summary: "Deletes an apartment"
       description: ""
       parameters:
-      - name: "customerId"
+      - name: "apartmentId"
         in: "path"
-        description: "customer id to delete"
+        description: "apartment id to delete"
         required: true
         type: "integer"
         format: "int64"
       responses:
         "404":
-          description: "customer not found"
+          description: "apartment not found"
         "200":
           description: "OK"
 definitions:
-  CustomerEditableAttributes:
+  apartmentEditableAttributes:
     type: "object"
     properties:
       first_name:
@@ -153,7 +153,7 @@ definitions:
       active: 
         type: "boolean"
       
-  CustomerSimplified:
+  apartmentSimplified:
     type: "object"
     properties:
       id:
@@ -168,12 +168,12 @@ definitions:
       active: 
         type: "boolean"
       
-  Customer:
+  apartment:
     allOf: 
       - type: "object"
         properties:
           id:
             type: "integer"
             format: "int64"
-      - $ref: '#/definitions/CustomerEditableAttributes'
+      - $ref: '#/definitions/apartmentEditableAttributes'
       
