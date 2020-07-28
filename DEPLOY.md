@@ -102,7 +102,7 @@ MAIL_PASS=[MAIL_PASS]
   - Enable https, cocher "Force HTTPS by redirecting all HTTP traffic to HTTPS", clicker sur "Save & Update"
   - Onglet App configs
   - Pour le path in app /srv changer le label en uploads puis Save & update
-  - Se rendre sur https://filebrowser.[NOM DOMAINE]/
+  - Se rendre sur https://<span>filebrowser.[NOM DOMAINE]/</span>
   - Se connecter avec les identifiant : admin / admin 
   - Se rendre dans settings et changer le mot de passe et update
   - Se rendre ensuite dans My Files
@@ -114,7 +114,7 @@ MAIL_PASS=[MAIL_PASS]
   - Caprover > Apps > entrer "back-office" dans l'input, cliquer sur le bouton "Create New App"
   - aller sur l'app "back-office"
   - onglet http settings : cliquer sur "Enable HTTPS", dans l'input "Container HTTP Port" mettre 80, cocher "Force HTTPS by redirecting all HTTP traffic to HTTPS", cliquer sur "Save & Update"
-  - onglet App Configs, Environmental Variables: cocher "bulk edit" et copier : REACT_APP_API_BASE_URL=https://api.[NOM DE DOMAINE]
+  - onglet App Configs, Environmental Variables: cocher "bulk edit" et copier : REACT_APP_API_BASE_URL=https://api.<span>[NOM DE DOMAINE]</span>
   - "Save & Update"
   - onglet "Deployement"
   - aller à la section Method 3: Deploy from Github/Bitbucket/Gitlab
@@ -132,7 +132,7 @@ MAIL_PASS=[MAIL_PASS]
   - Caprover > Apps > entrer "front-office" dans l'input, clicker sur le bouton "Create New App"
   - aller sur l'app "front-office"
   - onglet http settings : clicker sur "Enable HTTPS", dans l'input "Container HTTP Port" mettre 80,  cocher "Force HTTPS by redirecting all HTTP traffic to HTTPS", clicker sur "Save & Update"
-  - onglet App Configs, Environmental Variables: cocher "bulk edit" et copier : REACT_APP_API_BASE_URL=https://api.[NOM DE DOMAINE]
+  - onglet App Configs, Environmental Variables: cocher "bulk edit" et copier : REACT_APP_API_BASE_URL=https://<span>api.[NOM DE DOMAINE]</span>
   - "Save & Update"
   - onglet "Deployement"
   - aller à la section Method 3: Deploy from Github/Bitbucket/Gitlab
