@@ -1,6 +1,6 @@
-# Déploiement de l'application sur un serveur privé.
+# Déploiement de l'application sur un serveur privé
 
-## Choisir un serveur et un nom de domaine :
+## Choisir un serveur et un nom de domaine 
 
 * Le choix du provider est libre, cependant il est recommandé de disposer d'au moins un 1 Go de Ram et 30 Go d'espace de stockage . [La procédure suivante a été testée sur ce VPS](https://us.ovh.com/us/order/vps/?v=3#/vps/build?selection=~(range~'Essential~pricingMode~'default~flavor~'vps-essential-2-4-80~os~'ubuntu_20_04~datacenters~(SBG~1)))
 * Acheter un nom de domaine et le faire pointer sur l'adresse du serveur (il sera référencé dans ce document sous l'alias [NOM DE DOMAINE])
@@ -91,15 +91,15 @@ MAIL_PASS=[MAIL_PASS]
   - cliquer sur "Save & Update"
   - copier la valeur du champs apparu dans "Method 3: Deploy from Github/Bitbucket/Gitlab"
   - aller sur https://github.com/valiris-dev/valiris-api/settings/hooks
-  - clicker sur "add webhook"
-  - coller la valeur de l'input copiée précédement dans le champs Payload URL de github, clicker sur le bouton vert "Add webhook". L'API devrait être déployée automatiquement sur caprover. Après chaque push sur master, elle sera redéployée automatiquement.
+  - cliquer sur "add webhook"
+  - coller la valeur de l'input copiée précédement dans le champs Payload URL de github, cliquer sur le bouton vert "Add webhook". L'API devrait être déployée automatiquement sur caprover. Après chaque push sur master, elle sera redéployée automatiquement.
 
 ### STEP 4 : mise en place du dossier  uploads
   - Caprover > Apps > One-click Apps/Databases > Filebrowser
   - app name : filebrowser
   - deploy
   - Aller sur l'app filebrowser
-  - Enable https, cocher "Force HTTPS by redirecting all HTTP traffic to HTTPS", clicker sur "Save & Update"
+  - Enable https, cocher "Force HTTPS by redirecting all HTTP traffic to HTTPS", cliquer sur "Save & Update"
   - Onglet App configs
   - Pour le path in app /srv changer le label en uploads puis Save & update
   - Se rendre sur https://<span>filebrowser.[NOM DOMAINE]/</span>
@@ -125,13 +125,14 @@ MAIL_PASS=[MAIL_PASS]
   - "Save & Update"
   - copier la valeur du champs apparu dans "Method 3: Deploy from Github/Bitbucket/Gitlab"
   - aller sur https://github.com/valiris-dev/valiris-back-office/settings/hooks
-  - clicker sur "add webhook"
-  - coller la valeur de l'input copiée précédement dans le champs Payload URL de github, clicker sur le bouton vert "Add webhook".
+  - cliquer sur "add webhook"
+  - coller la valeur de l'input copiée précédement dans le champs Payload URL de github, cliquer sur le bouton vert "Add webhook".
 
 ### STEP 6 : créer le front-office
-  - Caprover > Apps > entrer "front-office" dans l'input, clicker sur le bouton "Create New App"
+  - Caprover > Apps > entrer "front-office" dans l'input, cliquer sur le bouton "Create New App"
   - aller sur l'app "front-office"
-  - onglet http settings : clicker sur "Enable HTTPS", dans l'input "Container HTTP Port" mettre 80,  cocher "Force HTTPS by redirecting all HTTP traffic to HTTPS", clicker sur "Save & Update"
+  - onglet http settings : cliquer sur "Enable HTTPS", dans l'input "Container HTTP Port" mettre 80,  cocher "Force HTTPS by redirecting all HTTP traffic to HTTPS", cliquer sur "Save & Update"
+  - onglet http settings : à coté du bouton "connect new domain", remplir l'input avec [NOM DE DOMAINE] et cliquer sur le bouton puis sur "enable HTTPS".
   - onglet App Configs, Environmental Variables: cocher "bulk edit" et copier : REACT_APP_API_BASE_URL=https://<span>api.[NOM DE DOMAINE]</span>
   - "Save & Update"
   - onglet "Deployement"
@@ -143,5 +144,5 @@ MAIL_PASS=[MAIL_PASS]
   - "Save & Update"
   - copier la valeur du champs apparu dans "Method 3: Deploy from Github/Bitbucket/Gitlab"
   - aller sur https://github.com/valiris-dev/valiris-back-office/settings/hooks
-  - clicker sur "add webhook"
-  - coller la valeur de l'input copiée précédement dans le champs Payload URL de github, clicker sur le bouton vert "Add webhook". 
+  - cliquer sur "add webhook"
+  - coller la valeur de l'input copiée précédement dans le champs Payload URL de github, cliquer sur le bouton vert "Add webhook". 
