@@ -55,7 +55,7 @@ Attendre 60 secondes
   - app name : db-admin
   - Deploy
   - Caprover > Apps > db-admin > Enable HTTPS et cocher Force HTTPS by redirecting all HTTP traffic to HTTPS et "Save & Update"
-  - aller à https://db-admin.[NOM DOMAINE]/
+  - aller à <span>https://db-admin.[NOM DOMAINE]/</span>
   - serveur : srv-captain--valiris-db
   - utilisateur : root
   - mot de passe : [DB_PASS]
